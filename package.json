@@ -88,6 +88,12 @@
         "title": "%command.openFilterMenu.title%",
         "category": "%command.openFilterMenu.category%",
         "icon": "$(filter)"
+      },
+      {
+        "command": "joblogAnalyzer.toggleCommandMessages",
+        "title": "%command.toggleCommandMessages.title%",
+        "category": "%command.toggleCommandMessages.category%",
+        "icon": "$(terminal)"
       }
     ],
     "viewsContainers": {

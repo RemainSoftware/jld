@@ -219,10 +219,14 @@ function registerCommands(
     // Open filter menu (combines all filter options)
     context.subscriptions.push(
         vscode.commands.registerCommand('joblogAnalyzer.openFilterMenu', async () => {
+            const commandLabel = treeDataProvider.isCommandHidden() 
+                ? t('filter.showCommandMessages')
+                : t('filter.hideCommandMessages');
             const options = [
                 { label: `$(filter) ${t('filter.filterByType')}`, command: 'joblogAnalyzer.filterByType' },
                 { label: `$(search) ${t('filter.filterByMessageId')}`, command: 'joblogAnalyzer.filterByMessageId' },
                 { label: `$(warning) ${t('filter.showHighSeverity')}`, command: 'joblogAnalyzer.showHighSeverity' },
+                { label: `$(terminal) ${commandLabel}`, command: 'joblogAnalyzer.toggleCommandMessages' },
                 { label: `$(clear-all) ${t('filter.clearAllFilters')}`, command: 'joblogAnalyzer.clearFilters' }
             ];
             
@@ -233,6 +237,13 @@ function registerCommands(
             if (selected) {
                 vscode.commands.executeCommand(selected.command);
             }
+        })
+    );
+    
+    // Toggle command messages visibility
+    context.subscriptions.push(
+        vscode.commands.registerCommand('joblogAnalyzer.toggleCommandMessages', () => {
+            treeDataProvider.toggleHideCommand();
         })
     );
 }

@@ -20,6 +20,8 @@
   "command.clearFilters.category": "Job Log Analyzer",
   "command.openFilterMenu.title": "Filtermenu openen",
   "command.openFilterMenu.category": "Job Log Analyzer",
+  "command.toggleCommandMessages.title": "Opdrachtberichten in-/uitschakelen",
+  "command.toggleCommandMessages.category": "Job Log Analyzer",
   "viewContainer.title": "Job Log Analyzer",
   "view.joblogAnalyzer.name": "Job Log Analyzer",
   "config.title": "Job Log Analyzer",

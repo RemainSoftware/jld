@@ -67,6 +67,9 @@ export interface LocalizedStrings {
     'filter.id': string;
     'filter.highSeverityOnly': string;
     'filter.minSeverity': string;
+    'filter.showCommandMessages': string;
+    'filter.hideCommandMessages': string;
+    'filter.commandHidden': string;
 
     // Status bar and messages
     'status.jobLog': string;
@@ -145,6 +148,9 @@ const defaultStrings: LocalizedStrings = {
     'filter.id': 'ID',
     'filter.highSeverityOnly': 'High severity only',
     'filter.minSeverity': 'Min SEV',
+    'filter.showCommandMessages': 'Show Command Messages',
+    'filter.hideCommandMessages': 'Hide Command Messages',
+    'filter.commandHidden': 'Command hidden',
 
     // Status bar and messages
     'status.jobLog': 'Job Log',

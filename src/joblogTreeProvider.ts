@@ -244,6 +244,13 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     }
     
     /**
+     * Check if command messages are hidden
+     */
+    public isCommandHidden(): boolean {
+        return this.hideCommand;
+    }
+    
+    /**
      * Set minimum severity filter
      */
     public setMinSeverity(severity: number): void {
@@ -311,6 +318,9 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
      */
     public getFilterSummary(): string {
         const filters: string[] = [];
+        if (this.hideCommand) {
+            filters.push(t('filter.commandHidden'));
+        }
         if (this.filterTypes.size > 0) {
             filters.push(`${t('filter.types')}: ${Array.from(this.filterTypes).join(', ')}`);
         }
@@ -381,9 +391,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
         
         // Add summary item
         const filterSummary = this.getFilterSummary();
-        const summaryDesc = filterSummary !== t('filter.noFilters') 
-            ? `${messages.length} of ${this.parsedLog.messages.length} | ${filterSummary}`
-            : t('symbol.messages', messages.length);
+        const summaryDesc = `${messages.length} of ${this.parsedLog.messages.length} | ${filterSummary}`;
         const summaryData: TreeItemData = {
             type: 'category',
             label: t('tree.summary'),

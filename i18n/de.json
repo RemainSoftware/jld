@@ -29,6 +29,9 @@
   "filter.id": "ID",
   "filter.highSeverityOnly": "Nur hoher Schweregrad",
   "filter.minSeverity": "Min SEV",
+  "filter.showCommandMessages": "Befehlsnachrichten anzeigen",
+  "filter.hideCommandMessages": "Befehlsnachrichten ausblenden",
+  "filter.commandHidden": "Befehle ausgeblendet",
 
   "status.jobLog": "Job-Log",
   "status.messagesCount": "{0} Nachrichten",

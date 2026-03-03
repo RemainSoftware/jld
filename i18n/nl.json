@@ -29,6 +29,9 @@
   "filter.id": "ID",
   "filter.highSeverityOnly": "Alleen hoge ernst",
   "filter.minSeverity": "Min SEV",
+  "filter.showCommandMessages": "Opdrachtberichten tonen",
+  "filter.hideCommandMessages": "Opdrachtberichten verbergen",
+  "filter.commandHidden": "Opdrachten verborgen",
 
   "status.jobLog": "Taakprotocol",
   "status.messagesCount": "{0} berichten",

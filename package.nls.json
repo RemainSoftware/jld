@@ -20,6 +20,8 @@
   "command.clearFilters.category": "Job Log Analyzer",
   "command.openFilterMenu.title": "Open Filter Menu",
   "command.openFilterMenu.category": "Job Log Analyzer",
+  "command.toggleCommandMessages.title": "Toggle Command Messages",
+  "command.toggleCommandMessages.category": "Job Log Analyzer",
   "viewContainer.title": "Job Log Analyzer",
   "view.joblogAnalyzer.name": "Job Log Analyzer",
   "config.title": "Job Log Analyzer",
