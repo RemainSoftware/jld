@@ -1,5 +1,5 @@
 {
-  "name": "joblog-analyzer",
+  "name": "joblog-detective",
   "displayName": "%displayName%",
   "description": "%description%",
   "version": "1.0.0",
@@ -34,64 +34,66 @@
         ],
         "filenamePatterns": [
           "**/QPJOBLOG*",
-          "**/*joblog*"
+          "**/*joblog*.txt",
+          "**/*joblog*.txt",
+          "**/*.joblog"
         ]
       }
     ],
     "commands": [
       {
-        "command": "joblogAnalyzer.analyze",
+        "command": "joblogDetective.analyze",
         "title": "%command.analyze.title%",
         "category": "%command.analyze.category%"
       },
       {
-        "command": "joblogAnalyzer.setAsJobLog",
+        "command": "joblogDetective.setAsJobLog",
         "title": "%command.setAsJobLog.title%",
         "category": "%command.setAsJobLog.category%"
       },
       {
-        "command": "joblogAnalyzer.refresh",
+        "command": "joblogDetective.refresh",
         "title": "%command.refresh.title%",
         "category": "%command.refresh.category%",
         "icon": "$(refresh)"
       },
       {
-        "command": "joblogAnalyzer.goToMessage",
+        "command": "joblogDetective.goToMessage",
         "title": "%command.goToMessage.title%",
         "category": "%command.goToMessage.category%"
       },
       {
-        "command": "joblogAnalyzer.filterByType",
+        "command": "joblogDetective.filterByType",
         "title": "%command.filterByType.title%",
         "category": "%command.filterByType.category%",
         "icon": "$(filter)"
       },
       {
-        "command": "joblogAnalyzer.showHighSeverity",
+        "command": "joblogDetective.showHighSeverity",
         "title": "%command.showHighSeverity.title%",
         "category": "%command.showHighSeverity.category%",
         "icon": "$(warning)"
       },
       {
-        "command": "joblogAnalyzer.filterByMessageId",
+        "command": "joblogDetective.filterByMessageId",
         "title": "%command.filterByMessageId.title%",
         "category": "%command.filterByMessageId.category%",
         "icon": "$(search)"
       },
       {
-        "command": "joblogAnalyzer.clearFilters",
+        "command": "joblogDetective.clearFilters",
         "title": "%command.clearFilters.title%",
         "category": "%command.clearFilters.category%",
         "icon": "$(clear-all)"
       },
       {
-        "command": "joblogAnalyzer.openFilterMenu",
+        "command": "joblogDetective.openFilterMenu",
         "title": "%command.openFilterMenu.title%",
         "category": "%command.openFilterMenu.category%",
         "icon": "$(filter)"
       },
       {
-        "command": "joblogAnalyzer.toggleCommandMessages",
+        "command": "joblogDetective.toggleCommandMessages",
         "title": "%command.toggleCommandMessages.title%",
         "category": "%command.toggleCommandMessages.category%",
         "icon": "$(terminal)"
@@ -100,18 +102,18 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "joblogAnalyzer",
+          "id": "joblogDetective",
           "title": "%viewContainer.title%",
           "icon": "$(list-tree)"
         }
       ]
     },
     "views": {
-      "joblogAnalyzer": [
+      "joblogDetective": [
         {
-          "id": "joblogAnalyzer",
-          "name": "%view.joblogAnalyzer.name%",
-          "when": "joblogAnalyzer.isJobLog",
+          "id": "joblogDetective",
+          "name": "%view.joblogDetective.name%",
+          "when": "joblogDetective.isJobLog",
           "icon": "$(list-tree)"
         }
       ]
@@ -119,48 +121,48 @@
     "menus": {
       "view/title": [
         {
-          "command": "joblogAnalyzer.refresh",
-          "when": "view == joblogAnalyzer",
+          "command": "joblogDetective.refresh",
+          "when": "view == joblogDetective",
           "group": "navigation"
         },
         {
-          "command": "joblogAnalyzer.openFilterMenu",
-          "when": "view == joblogAnalyzer",
+          "command": "joblogDetective.openFilterMenu",
+          "when": "view == joblogDetective",
           "group": "navigation"
         },
         {
-          "command": "joblogAnalyzer.clearFilters",
-          "when": "view == joblogAnalyzer",
+          "command": "joblogDetective.clearFilters",
+          "when": "view == joblogDetective",
           "group": "navigation"
         }
       ],
       "editor/context": [
         {
-          "command": "joblogAnalyzer.setAsJobLog",
+          "command": "joblogDetective.setAsJobLog",
           "group": "joblog"
         }
       ],
       "commandPalette": [
         {
-          "command": "joblogAnalyzer.goToMessage",
-          "when": "joblogAnalyzer.isJobLog"
+          "command": "joblogDetective.goToMessage",
+          "when": "joblogDetective.isJobLog"
         }
       ]
     },
     "configuration": {
       "title": "%config.title%",
       "properties": {
-        "joblogAnalyzer.highSeverityThreshold": {
+        "joblogDetective.highSeverityThreshold": {
           "type": "number",
           "default": 30,
           "description": "%config.highSeverityThreshold.description%"
         },
-        "joblogAnalyzer.hideCommandMessages": {
+        "joblogDetective.hideCommandMessages": {
           "type": "boolean",
           "default": true,
           "description": "%config.hideCommandMessages.description%"
         },
-        "joblogAnalyzer.autoDetect": {
+        "joblogDetective.autoDetect": {
           "type": "boolean",
           "default": true,
           "description": "%config.autoDetect.description%"

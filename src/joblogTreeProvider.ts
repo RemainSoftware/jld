@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// TreeDataProvider for Job Log Analyzer - provides custom tree view
+// TreeDataProvider for Job Log Detective - provides custom tree view
 
 import * as vscode from 'vscode';
 import { ParsedJobLog, JobLogMessage, JobLogStats, TreeItemData, JobCompletionStatus } from './types';
@@ -30,7 +30,7 @@ import { parseJobLog, groupMessages, filterMessages, getHighPriorityMessages } f
 import { t } from './i18n';
 
 /**
- * Tree item for the Job Log Analyzer view
+ * Tree item for the Job Log Detective view
  */
 export class JobLogTreeItem extends vscode.TreeItem {
     constructor(
@@ -45,7 +45,7 @@ export class JobLogTreeItem extends vscode.TreeItem {
         
         if (message) {
             this.command = {
-                command: 'joblogAnalyzer.goToMessage',
+                command: 'joblogDetective.goToMessage',
                 title: t('tree.goToMessage'),
                 arguments: [message]
             };
@@ -175,7 +175,7 @@ export class JobLogTreeItem extends vscode.TreeItem {
 }
 
 /**
- * Tree data provider for the Job Log Analyzer view
+ * Tree data provider for the Job Log Detective view
  */
 export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTreeItem> {
     private _onDidChangeTreeData: vscode.EventEmitter<JobLogTreeItem | undefined | null | void> = new vscode.EventEmitter<JobLogTreeItem | undefined | null | void>();
@@ -192,7 +192,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     constructor() {
         // Listen to configuration changes
         vscode.workspace.onDidChangeConfiguration(e => {
-            if (e.affectsConfiguration('joblogAnalyzer')) {
+            if (e.affectsConfiguration('joblogDetective')) {
                 this.loadConfig();
                 this.refresh();
             }
@@ -202,7 +202,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     }
     
     private loadConfig(): void {
-        const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+        const config = vscode.workspace.getConfiguration('joblogDetective');
         this.hideCommand = config.get<boolean>('hideCommandMessages', true);
     }
     
@@ -212,7 +212,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     public setDocument(document: vscode.TextDocument | undefined): void {
         this.document = document;
         if (document) {
-            const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+            const config = vscode.workspace.getConfiguration('joblogDetective');
             const threshold = config.get<number>('highSeverityThreshold', 30);
             this.parsedLog = parseJobLog(document.getText(), threshold);
         } else {
@@ -378,7 +378,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
         }
         
         const items: JobLogTreeItem[] = [];
-        const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+        const config = vscode.workspace.getConfiguration('joblogDetective');
         const highSeverityThreshold = config.get<number>('highSeverityThreshold', 30);
         
         // Apply all filters using filterMessages

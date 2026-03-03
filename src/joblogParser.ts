@@ -647,7 +647,7 @@ export function parseJobLog(content: string, highSeverityThreshold: number = 30)
     
     // Detect language (for logging purposes, patterns already support all)
     const detectedLang = detectLanguage(content);
-    console.log(`Job Log Analyzer: Detected language: ${detectedLang.name}`);
+    console.log(`Job Log Detective: Detected language: ${detectedLang.name}`);
     
     // Parse header
     const header = parseHeader(lines);

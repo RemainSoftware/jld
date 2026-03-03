@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// Internationalization (i18n) support for Job Log Analyzer runtime strings
+// Internationalization (i18n) support for Job Log Detective runtime strings
 // This module provides localized strings for the extension
 
 import * as vscode from 'vscode';
@@ -115,8 +115,8 @@ export interface LocalizedStrings {
  */
 const defaultStrings: LocalizedStrings = {
     // Extension activation
-    'extension.activated': 'Job Log Analyzer is now active',
-    'extension.deactivated': 'Job Log Analyzer deactivated',
+    'extension.activated': 'Job Log Detective is now active',
+    'extension.deactivated': 'Job Log Detective deactivated',
 
     // Editor messages
     'editor.noActiveEditor': 'No active editor',

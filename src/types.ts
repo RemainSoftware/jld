@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// Type definitions for Job Log Analyzer
+// Type definitions for Job Log Detective
 
 /**
  * Message types that can appear in an IBM i job log

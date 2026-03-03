@@ -23,7 +23,7 @@
   "command.toggleCommandMessages.title": "Toggle Command Messages",
   "command.toggleCommandMessages.category": "Job Log Detective",
   "viewContainer.title": "Job Log Detective",
-  "view.joblogAnalyzer.name": "Job Log Detective",
+  "view.joblogDetective.name": "Job Log Detective",
   "config.title": "Job Log Detective",
   "config.highSeverityThreshold.description": "Messages with severity >= this value are considered high severity",
   "config.hideCommandMessages.description": "Hide Command type messages in the analysis view by default",

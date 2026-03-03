@@ -38,13 +38,13 @@ jobs:
         run: npm install -g @vscode/vsce
 
       - name: Package extension
-        run: vsce package --out joblog-analyzer.vsix
+        run: vsce package --out joblog-detective.vsix
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4
         with:
-          name: joblog-analyzer-vsix
-          path: joblog-analyzer.vsix
+          name: joblog-detective-vsix
+          path: joblog-detective.vsix
           retention-days: 30
 
   publish:

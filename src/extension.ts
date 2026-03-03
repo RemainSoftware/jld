@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// Job Log Analyzer - VS Code Extension Entry Point
+// Job Log Detective - VS Code Extension Entry Point
 
 import * as vscode from 'vscode';
 import { detectJobLog } from './joblogParser';
@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(plainTextSymbolProvider);
     
     // Register tree view
-    const treeView = vscode.window.createTreeView('joblogAnalyzer', {
+    const treeView = vscode.window.createTreeView('joblogDetective', {
         treeDataProvider,
         showCollapseAll: true
     });
@@ -89,7 +89,7 @@ function registerCommands(
 ): void {
     // Analyze command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.analyze', async () => {
+        vscode.commands.registerCommand('joblogDetective.analyze', async () => {
             const editor = vscode.window.activeTextEditor;
             if (!editor) {
                 vscode.window.showWarningMessage(t('editor.noActiveEditor'));
@@ -101,7 +101,7 @@ function registerCommands(
     
     // Set as job log command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.setAsJobLog', async () => {
+        vscode.commands.registerCommand('joblogDetective.setAsJobLog', async () => {
             const editor = vscode.window.activeTextEditor;
             if (!editor) {
                 vscode.window.showWarningMessage(t('editor.noActiveEditor'));
@@ -113,7 +113,7 @@ function registerCommands(
     
     // Refresh command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.refresh', () => {
+        vscode.commands.registerCommand('joblogDetective.refresh', () => {
             const editor = vscode.window.activeTextEditor;
             if (editor) {
                 treeDataProvider.setDocument(editor.document);
@@ -125,7 +125,7 @@ function registerCommands(
     
     // Go to message command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.goToMessage', async (message: JobLogMessage) => {
+        vscode.commands.registerCommand('joblogDetective.goToMessage', async (message: JobLogMessage) => {
             if (!message) {
                 return;
             }
@@ -159,7 +159,7 @@ function registerCommands(
     
     // Filter by type command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.filterByType', async () => {
+        vscode.commands.registerCommand('joblogDetective.filterByType', async () => {
             const types = getMessageTypes();
             
             const selected = await vscode.window.showQuickPick(types, {
@@ -179,14 +179,14 @@ function registerCommands(
     
     // Show high severity only command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.showHighSeverity', () => {
+        vscode.commands.registerCommand('joblogDetective.showHighSeverity', () => {
             treeDataProvider.toggleHighSeverityOnly();
         })
     );
     
     // Filter by message ID pattern command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.filterByMessageId', async () => {
+        vscode.commands.registerCommand('joblogDetective.filterByMessageId', async () => {
             const currentPattern = treeDataProvider.getMessageIdPattern();
             const pattern = await vscode.window.showInputBox({
                 prompt: t('filter.enterMessageIdPattern'),
@@ -211,23 +211,23 @@ function registerCommands(
     
     // Clear all filters command
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.clearFilters', () => {
+        vscode.commands.registerCommand('joblogDetective.clearFilters', () => {
             treeDataProvider.clearAllFilters();
         })
     );
     
     // Open filter menu (combines all filter options)
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.openFilterMenu', async () => {
+        vscode.commands.registerCommand('joblogDetective.openFilterMenu', async () => {
             const commandLabel = treeDataProvider.isCommandHidden() 
                 ? t('filter.showCommandMessages')
                 : t('filter.hideCommandMessages');
             const options = [
-                { label: `$(filter) ${t('filter.filterByType')}`, command: 'joblogAnalyzer.filterByType' },
-                { label: `$(search) ${t('filter.filterByMessageId')}`, command: 'joblogAnalyzer.filterByMessageId' },
-                { label: `$(warning) ${t('filter.showHighSeverity')}`, command: 'joblogAnalyzer.showHighSeverity' },
-                { label: `$(terminal) ${commandLabel}`, command: 'joblogAnalyzer.toggleCommandMessages' },
-                { label: `$(clear-all) ${t('filter.clearAllFilters')}`, command: 'joblogAnalyzer.clearFilters' }
+                { label: `$(filter) ${t('filter.filterByType')}`, command: 'joblogDetective.filterByType' },
+                { label: `$(search) ${t('filter.filterByMessageId')}`, command: 'joblogDetective.filterByMessageId' },
+                { label: `$(warning) ${t('filter.showHighSeverity')}`, command: 'joblogDetective.showHighSeverity' },
+                { label: `$(terminal) ${commandLabel}`, command: 'joblogDetective.toggleCommandMessages' },
+                { label: `$(clear-all) ${t('filter.clearAllFilters')}`, command: 'joblogDetective.clearFilters' }
             ];
             
             const selected = await vscode.window.showQuickPick(options, {
@@ -242,7 +242,7 @@ function registerCommands(
     
     // Toggle command messages visibility
     context.subscriptions.push(
-        vscode.commands.registerCommand('joblogAnalyzer.toggleCommandMessages', () => {
+        vscode.commands.registerCommand('joblogDetective.toggleCommandMessages', () => {
             treeDataProvider.toggleHideCommand();
         })
     );
@@ -261,7 +261,7 @@ function setupDocumentDetection(
             if (editor) {
                 checkAndSetJobLog(editor.document, treeDataProvider);
             } else {
-                vscode.commands.executeCommand('setContext', 'joblogAnalyzer.isJobLog', false);
+                vscode.commands.executeCommand('setContext', 'joblogDetective.isJobLog', false);
                 treeDataProvider.setDocument(undefined);
             }
         })
@@ -300,7 +300,7 @@ function checkAndSetJobLog(
     document: vscode.TextDocument,
     treeDataProvider: JobLogTreeDataProvider
 ): void {
-    const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+    const config = vscode.workspace.getConfiguration('joblogDetective');
     const autoDetect = config.get<boolean>('autoDetect', true);
     
     // Check if it's already marked as joblog language
@@ -326,7 +326,7 @@ function checkAndSetJobLog(
     }
     
     // Not a job log
-    vscode.commands.executeCommand('setContext', 'joblogAnalyzer.isJobLog', false);
+    vscode.commands.executeCommand('setContext', 'joblogDetective.isJobLog', false);
     treeDataProvider.setDocument(undefined);
 }
 
@@ -343,7 +343,7 @@ async function setDocumentAsJobLog(
     }
     
     // Set context for conditional UI
-    vscode.commands.executeCommand('setContext', 'joblogAnalyzer.isJobLog', true);
+    vscode.commands.executeCommand('setContext', 'joblogDetective.isJobLog', true);
     
     // Update tree view
     treeDataProvider.setDocument(document);
@@ -378,8 +378,8 @@ async function setDocumentAsJobLog(
                 if (selection === t('status.showLogAnalysis')) {
                     // Clear any filters and show all messages
                     treeDataProvider.clearAllFilters();
-                    // Reveal the Job Log Analyzer view
-                    vscode.commands.executeCommand('joblogAnalyzer.focus');
+                    // Reveal the Job Log Detective view
+                    vscode.commands.executeCommand('joblogDetective.focus');
                 }
             });
         }

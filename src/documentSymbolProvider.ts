@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// DocumentSymbolProvider for Job Log Analyzer - provides Outline view integration
+// DocumentSymbolProvider for Job Log Detective - provides Outline view integration
 
 import * as vscode from 'vscode';
 import { ParsedJobLog } from './types';
@@ -48,7 +48,7 @@ export class JobLogDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             return cached.symbols;
         }
         
-        const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+        const config = vscode.workspace.getConfiguration('joblogDetective');
         const hideCommand = config.get<boolean>('hideCommandMessages', true);
         const highSeverityThreshold = config.get<number>('highSeverityThreshold', 30);
         

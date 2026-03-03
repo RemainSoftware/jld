@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-// Localization support for Job Log Analyzer
+// Localization support for Job Log Detective
 // Supports multiple languages: English, German, Dutch, Spanish, and French
 
 /**

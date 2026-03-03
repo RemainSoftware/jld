@@ -58,9 +58,9 @@ If automatic detection doesn't work:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `joblogAnalyzer.highSeverityThreshold` | `30` | Messages with severity >= this value are highlighted |
-| `joblogAnalyzer.hideCommandMessages` | `true` | Hide Command type messages by default |
-| `joblogAnalyzer.autoDetect` | `true` | Automatically detect job log files by content |
+| `joblogDetective.highSeverityThreshold` | `30` | Messages with severity >= this value are highlighted |
+| `joblogDetective.hideCommandMessages` | `true` | Hide Command type messages by default |
+| `joblogDetective.autoDetect` | `true` | Automatically detect job log files by content |
 
 ## Commands
 
