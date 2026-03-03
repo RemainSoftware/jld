@@ -45,7 +45,7 @@ jobs:
         with:
           name: joblog-detective-vsix
           path: joblog-detective.vsix
-          retention-days: 30
+          retention-days: 5
 
   publish:
     needs: build
