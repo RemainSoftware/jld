@@ -1,4 +1,4 @@
-# Job Log Detective
+# IBM i Job Log Detective
 
 A VS Code extension for analyzing IBM i job logs. Quickly find errors and issues in large job log files.
 
