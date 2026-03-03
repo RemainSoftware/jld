@@ -1,0 +1,179 @@
+{
+  "name": "joblog-analyzer",
+  "displayName": "Job Log Analyzer",
+  "description": "Analyze IBM i job logs to quickly find errors and issues",
+  "version": "0.0.1",
+  "license": "MIT",
+  "publisher": "remainsoftware",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:joblog",
+    "workspaceContains:**/QPJOBLOG*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "joblog",
+        "aliases": [
+          "IBM i Job Log",
+          "joblog"
+        ],
+        "filenames": [
+          "QPJOBLOG"
+        ],
+        "filenamePatterns": [
+          "**/QPJOBLOG*",
+          "**/*joblog*"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "joblogAnalyzer.analyze",
+        "title": "Analyze Job Log",
+        "category": "Job Log Analyzer"
+      },
+      {
+        "command": "joblogAnalyzer.setAsJobLog",
+        "title": "Set as IBM i Job Log",
+        "category": "Job Log Analyzer"
+      },
+      {
+        "command": "joblogAnalyzer.refresh",
+        "title": "Refresh Analysis",
+        "category": "Job Log Analyzer",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "joblogAnalyzer.goToMessage",
+        "title": "Go to Message",
+        "category": "Job Log Analyzer"
+      },
+      {
+        "command": "joblogAnalyzer.filterByType",
+        "title": "Filter by Message Type",
+        "category": "Job Log Analyzer",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "joblogAnalyzer.showHighSeverity",
+        "title": "Show High Severity Only",
+        "category": "Job Log Analyzer",
+        "icon": "$(warning)"
+      },
+      {
+        "command": "joblogAnalyzer.filterByMessageId",
+        "title": "Filter by Message ID Pattern",
+        "category": "Job Log Analyzer",
+        "icon": "$(search)"
+      },
+      {
+        "command": "joblogAnalyzer.clearFilters",
+        "title": "Clear All Filters",
+        "category": "Job Log Analyzer",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "joblogAnalyzer.openFilterMenu",
+        "title": "Open Filter Menu",
+        "category": "Job Log Analyzer",
+        "icon": "$(filter)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "joblogAnalyzer",
+          "title": "Job Log Analyzer",
+          "icon": "$(list-tree)"
+        }
+      ]
+    },
+    "views": {
+      "joblogAnalyzer": [
+        {
+          "id": "joblogAnalyzer",
+          "name": "Job Log Analyzer",
+          "when": "joblogAnalyzer.isJobLog",
+          "icon": "$(list-tree)"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "joblogAnalyzer.refresh",
+          "when": "view == joblogAnalyzer",
+          "group": "navigation"
+        },
+        {
+          "command": "joblogAnalyzer.openFilterMenu",
+          "when": "view == joblogAnalyzer",
+          "group": "navigation"
+        },
+        {
+          "command": "joblogAnalyzer.clearFilters",
+          "when": "view == joblogAnalyzer",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "joblogAnalyzer.setAsJobLog",
+          "group": "joblog"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "joblogAnalyzer.goToMessage",
+          "when": "joblogAnalyzer.isJobLog"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Job Log Analyzer",
+      "properties": {
+        "joblogAnalyzer.highSeverityThreshold": {
+          "type": "number",
+          "default": 30,
+          "description": "Messages with severity >= this value are considered high severity"
+        },
+        "joblogAnalyzer.hideCommandMessages": {
+          "type": "boolean",
+          "default": true,
+          "description": "Hide Command type messages in the analysis view by default"
+        },
+        "joblogAnalyzer.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect job log files by content"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0",
+    "vitest": "^4.0.18"
+  }
+}

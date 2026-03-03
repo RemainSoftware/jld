@@ -1,0 +1,219 @@
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     02-03-26  11:29:03 CET     Page    1  
+  Job name . . . . . . . . . . :   OMX015          User  . . . . . . :   REMAIN        Number . . . . . . . . . . . :   731889       
+  Job description  . . . . . . :   OMSJOBD         Library . . . . . :   OMSRUN51                                                   
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+CPF1124    Information             00   02-03-26  11:29:03.344399  QWTPIIPP     QSYS        06F6     *EXT                    *N     
+                                     Message . . . . :   Job 731889/REMAIN/OMX015 started on 02-03-26 at 11:29:03 in                 
+                                       subsystem OMSTCPSVR in OMSRUN51. Job entered system on 02-03-26 at 11:29:03.                 
+CPI1125    Information             00   02-03-26  11:29:03.345335  QWTPCRJA     QSYS        0110     *EXT                    *N     
+                                     Message . . . . :   Job 731889/REMAIN/OMX015 submitted.                                         
+                                     Cause . . . . . :   Job 731889/REMAIN/OMX015 submitted to job queue OMSJOBQ1 in                 
+                                       OMSRUN51 from job 731816/REMAIN/QPADEV0003. Job 731889/REMAIN/OMX015 was                       
+                                       started using the Submit Job (SBMJOB) command with the following job                         
+                                       attributes: JOBPTY(5) OUTPTY(5) PRTTXT() RTGDTA(QCMDB) SYSLIBL(QSYS                          
+                                       QSYS2      QHLPSYS    QUSRSYS    REMAINSYS) CURLIB(*CRTDFT) INLLIBL(QTEMP                    
+                                         QGPL       OMSEFFE    OMSRUN51   IATOOLS    IDDOSDS    IDDOSDSDTA                          
+                                       MIMIXQGPL  MIMIX      XAPROD     XL_WEBLIB  RPGTOOLBOX) INLASPGRP(*NONE)                     
+                                       LOG(4 00 *SECLVL) LOGCLPGM(*NO) LOGOUTPUT(*JOBEND) OUTQ(/*DEV) PRTDEV(PRT01)                 
+                                       INQMSGRPY(*RQD) HOLD(*NO) DATE(*SYSVAL) SWS(00000000)  MSGQ(QUSRSYS/REMAIN)                   
+                                       CCSID(37) SRTSEQ(*N/*HEX) LANGID(ENU) CNTRYID(US) JOBMSGQMX(16)                              
+                                       JOBMSGQFL(*WRAP) ALWMLTTHD(*NO) SPLFACN(*KEEP) ACGCDE().                                     
+*NONE      Request                      02-03-26  11:29:03.345490  QWTSCSBJ                 *N       QCMD        QSYS        019B   
+                                     Message . . . . :  -CALL PGM(OMC021C) PARM(('10') ('KE180') ('T0269')                          
+                                       ('OMX015') ('*PGM') ('V18T0269') (' ') (' ') (' ') (' ') ('0') ('*NORM'))                    
+OTP0017    Information             00   02-03-26  11:29:03.450270  OMX901C      OMSRUN51    *STMT    OMC021C     OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   OMX901C                                                        
+                                     From procedure  . . . . . . :   OMX901C                                                        
+                                     Statement . . . . . . . . . :   8906                                                           
+                                     To module . . . . . . . . . :   OMC021C                                                        
+                                     To procedure  . . . . . . . :   OMC021C                                                        
+                                     Statement . . . . . . . . . :   16100                                                          
+                                     Message . . . . :   Start compile for object V18T0269/OMX015 type *PGM in                      
+                                       library V18T0269 for detail *NONE                                                            
+                                     Cause . . . . . :   Compilation started for object OMX015 with type *PGM and                   
+                                       detail *NONE in library V18T0269. The related Fix T0269 is registered in                     
+                                       application KE180. Recovery  . . . :   No recovery necessary. This is an                     
+                                       informational message.                                                                       
+CPC2101    Completion              00   02-03-26  11:29:03.478095  QLICHLIB     QSYS        00D1     OMX960C     OMSRUN51    *STMT  
+                                     To module . . . . . . . . . :   OMX960C                                                        
+                                     To procedure  . . . . . . . :   OMX960C                                                        
+                                     Statement . . . . . . . . . :   9200                                                           
+                                     Message . . . . :   Library list changed.                                                      
+                                     Cause . . . . . :   The user library list was replaced by the specified list                   
+                                       of libraries.                                                                                
+CPCA980    Completion              00   02-03-26  11:29:03.526092  QP0ZADDE     QSYS        *STMT    OMX8252     OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   QP0ZADDE                                                       
+                                     From procedure  . . . . . . :   main                                                           
+                                     Statement . . . . . . . . . :   226                                                            
+                                     To module . . . . . . . . . :   OMX8252                                                        
+                                     To procedure  . . . . . . . :   CALLEVENTPROGRAM                                               
+                                     Statement . . . . . . . . . :   1410                                                           
+                                     Message . . . . :   Environment variable added.                                                
+                                     Cause . . . . . :   Environment variable 'QIBM_RPG_WNF7031_EVENTS' has been                    
+                                       added.                                                                                       
+CPC2197    Completion              00   02-03-26  11:29:03.538567  QLICHLBL     QSYS        0149     OMC022EXC   OMSRUN51    *STMT  
+                                     To module . . . . . . . . . :   OMC022EXC                                                      
+                                     To procedure  . . . . . . . :   OMC022EXC                                                      
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     02-03-26  11:29:03 CET     Page    2  
+  Job name . . . . . . . . . . :   OMX015          User  . . . . . . :   REMAIN        Number . . . . . . . . . . . :   731889       
+  Job description  . . . . . . :   OMSJOBD         Library . . . . . :   OMSRUN51                                                   
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+                                     Statement . . . . . . . . . :   4900                                                           
+                                     Message . . . . :   Library OMSRUN51 removed from library list.                                
+                                     Cause . . . . . :   If the RMVLIBLE command was used, OMSRUN51 was removed                     
+                                       from the user library list.  If the CHGSYSLIBL command was used, OMSRUN51                    
+                                       was removed from the system portion of the library list.                                     
+CPC7301    Completion              00   02-03-26  11:29:03.548010  QDDCPF       QSYS        054C     QSQPMAIN    QSYS        *STMT  
+                                     To module . . . . . . . . . :   QSQPMAIN                                                       
+                                     To procedure  . . . . . . . :   CRTFILE                                                        
+                                     Statement . . . . . . . . . :   15236                                                          
+                                     Message . . . . :   File QSQLTEMP1 created in library QTEMP.                                   
+CPC7305    Completion              00   02-03-26  11:29:03.553028  QDDCPFM      QSYS        005B     QSQPMAIN    QSYS        *STMT  
+                                     To module . . . . . . . . . :   QSQPMAIN                                                       
+                                     To procedure  . . . . . . . :   CRTFILE                                                        
+                                     Statement . . . . . . . . . :   15236                                                          
+                                     Message . . . . :   Member OMX015 added to file QSQLTEMP1 in QTEMP.                            
+CPC2206    Completion              00   02-03-26  11:29:03.721864  QSYCHONR     QSYS        00F0     QLIINSRT    QSYS        065C   
+                                     Message . . . . :   Ownership of object QRNFER in QTEMP type *USRSPC changed.                  
+                                     Cause . . . . . :   The ownership of object QRNFER in library QTEMP type                       
+                                       *USRSPC has changed.                                                                         
+CPC2206    Completion              00   02-03-26  11:29:03.729424  QSYCHONR     QSYS        00F0     QLIINSRT    QSYS        065C   
+                                     Message . . . . :   Ownership of object QRNFEF in QTEMP type *USRSPC changed.                  
+                                     Cause . . . . . :   The ownership of object QRNFEF in library QTEMP type                       
+                                       *USRSPC has changed.                                                                         
+RNS9308    Completion              50   02-03-26  11:29:03.884671  QRN4CPP      QDEVTOOLS   *STMT    OMC022EXC   OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   GRP4CPP                                                        
+                                     From procedure  . . . . . . :   cleanup                                                        
+                                     Statement . . . . . . . . . :   19                                                             
+                                     To module . . . . . . . . . :   OMC022EXC                                                      
+                                     To procedure  . . . . . . . :   OMC022EXC                                                      
+                                     Statement . . . . . . . . . :   5600                                                           
+                                     Message . . . . :   Compilation stopped. Severity 30 errors found in program.                  
+                                     Cause . . . . . :   The RPG compiler found at least one error in the program                   
+                                       of severity greater than that specified in the GENLVL option on the                          
+                                       CRTRPGMOD or CRTBNDRPG command. Recovery  . . . :   Correct the errors in                    
+                                       the program. Compile again.                                                                  
+CPC2206    Completion              00   02-03-26  11:29:03.894017  QSYCHONR     QSYS        00F0     QLIINSRT    QSYS        065C   
+                                     Message . . . . :   Ownership of object RETURNCODE in QTEMP type *DTAARA                       
+                                       changed.                                                                                     
+                                     Cause . . . . . :   The ownership of object RETURNCODE in library QTEMP type                   
+                                       *DTAARA has changed.                                                                         
+CPC0904    Completion              00   02-03-26  11:29:03.898109  QWCCCRVC     QSYS        010A     QRN4CPP     QDEVTOOLS   *STMT  
+                                     To module . . . . . . . . . :   GRP4CPP                                                        
+                                     To procedure  . . . . . . . :   update_dtaara                                                  
+                                     Statement . . . . . . . . . :   8                                                              
+                                     Message . . . . :   Data area RETURNCODE created in library QTEMP.                             
+RNS9310    Escape                  50   02-03-26  11:29:03.898889  QRN4CPP      QDEVTOOLS   *STMT    OMC022EXC   OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   GRP4CPP                                                        
+                                     From procedure  . . . . . . :   endcomp                                                        
+                                     Statement . . . . . . . . . :   20                                                             
+                                     To module . . . . . . . . . :   OMC022EXC                                                      
+                                     To procedure  . . . . . . . :   OMC022EXC                                                      
+                                     Statement . . . . . . . . . :   5600                                                           
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     02-03-26  11:29:03 CET     Page    3  
+  Job name . . . . . . . . . . :   OMX015          User  . . . . . . :   REMAIN        Number . . . . . . . . . . . :   731889       
+  Job description  . . . . . . :   OMSJOBD         Library . . . . . :   OMSRUN51                                                   
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+                                     Message . . . . :   Compilation failed. Program OMX015 not created in library                  
+                                       V18T0269.                                                                                    
+                                     Cause . . . . . :   Compilation failure normally occurs when the severity of                   
+                                       issued messages exceeds the value specified for the GENLVL parameter on the                  
+                                       CRTBNDRPG command. See the compiler listing or the job log for error                         
+                                       messages. Recovery  . . . :   Correct the errors or change the value                         
+                                       specified for the GENLVL parameter. Compile again.                                           
+CPF9999    Escape                  40   02-03-26  11:29:03.900889  QMHUNMSG                 *N       OMC022EXC   OMSRUN51    *STMT  
+                                     To module . . . . . . . . . :   OMC022EXC                                                      
+                                     To procedure  . . . . . . . :   OMC022EXC                                                      
+                                     Statement . . . . . . . . . :   5600                                                           
+                                     Message . . . . :   Function check. RNS9310 unmonitored by OMC022EXC at                        
+                                       statement 0000005600, instruction X'0000'.                                                   
+                                     Cause . . . . . :   An escape exception message was sent to a program which                    
+                                       did not monitor for that message. The full name of the program to which the                  
+                                       unmonitored message was sent is OMC022EXC OMC022EXC OMC022EXC. At the time                   
+                                       the message was sent the program was stopped at higher level language                        
+                                       statement number(s) 0000005600. If more than one statement number is shown,                  
+                                       the program was a bound program. Optimization does not allow a single                        
+                                       statement number to be determined. If *N is shown as a value, it means the                   
+                                       actual value was not available. Recovery  . . . :   See the low level                        
+                                       messages previously listed to locate the cause of the function check.                        
+                                       Correct any errors, and then try the request again.                                          
+CPC2196    Completion              00   02-03-26  11:29:03.901011  QLICUSRL     QSYS        0114     OMC022EXC   OMSRUN51    *STMT  
+                                     To module . . . . . . . . . :   OMC022EXC                                                      
+                                     To procedure  . . . . . . . :   OMC022EXC                                                      
+                                     Statement . . . . . . . . . :   7100                                                           
+                                     Message . . . . :   Library OMSRUN51 added to library list.                                    
+                                     Cause . . . . . :   If the ADDLIBLE command was used, OMSRUN51 was added to                    
+                                       the user library list.  If the CHGSYSLIBL command was used, OMSRUN51 was                     
+                                       added to the system portion of the library list.                                             
+CMDE003    Diagnostic              00   02-03-26  11:29:03.901115  OMC022EXC    OMSRUN51    *STMT    OMC021C     OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   OMC022EXC                                                      
+                                     From procedure  . . . . . . :   OMC022EXC                                                      
+                                     Statement . . . . . . . . . :   7400                                                           
+                                     To module . . . . . . . . . :   OMC021C                                                        
+                                     To procedure  . . . . . . . :   OMC021C                                                        
+                                     Statement . . . . . . . . . :   16100                                                          
+                                     Message . . . . :   Problems executing command. See second level text for                      
+                                       command string.                                                                              
+                                     CRTSQLRPGI OBJ(V18T0269/OMX015) SRCFILE(V18T0269S/QRPGLESRC) SRCMBR(OMX015)                    
+                                       COMMIT(*NONE) OBJTYPE(*PGM) OPTION(*XREF *EVENTF) TGTRLS(V7R4M0)                             
+                                       DBGVIEW(*SOURCE) USRPRF(*OWNER) DYNUSRPRF(*OWNER) SRTSEQ(*HEX)                               
+                                       COMPILEOPT('DFTACTGRP(*NO) ACTGRP(*CALLER)')                                                 
+CMD0008    Information             20   02-03-26  11:29:03.907643  OMX901C      OMSRUN51    *STMT    OMC021C     OMSRUN51    *STMT  
+                                     From module . . . . . . . . :   OMX901C                                                        
+                                     From procedure  . . . . . . :   OMX901C                                                        
+                                     Statement . . . . . . . . . :   8906                                                           
+                                     To module . . . . . . . . . :   OMC021C                                                        
+                                     To procedure  . . . . . . . :   OMC021C                                                        
+                                     Statement . . . . . . . . . :   16100                                                          
+                                     Message . . . . :   Error executing command: CRTSQLRPGI OBJ(V18T0269/OMX015)                   
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     02-03-26  11:29:03 CET     Page    4  
+  Job name . . . . . . . . . . :   OMX015          User  . . . . . . :   REMAIN        Number . . . . . . . . . . . :   731889       
+  Job description  . . . . . . :   OMSJOBD         Library . . . . . :   OMSRUN51                                                   
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+                                       SRCFILE(V18T0269S/QRPGLESRC) SRCMBR(OMX015) COMMIT(*NONE) OBJTYPE(*PGM)                      
+                                       OPTION(*XREF *EVENTF) TGTRLS(V7R4M0) DBGVIEW(*SOURCE) USRPRF(*OWNER)                         
+                                       DYNUSRPRF(*OWNER) SRTSEQ(*HEX) COMPILEOPT('DFTACTGRP(*NO) ACTGRP(*CALLER)')                  
+CPC2101    Completion              00   02-03-26  11:29:03.922984  QLICHLIB     QSYS        00D1     OMX960C     OMSRUN51    *STMT  
+                                     To module . . . . . . . . . :   OMX960C                                                        
+                                     To procedure  . . . . . . . :   OMX960C                                                        
+                                     Statement . . . . . . . . . :   9200                                                           
+                                     Message . . . . :   Library list changed.                                                      
+                                     Cause . . . . . :   The user library list was replaced by the specified list                   
+                                       of libraries.                                                                                
+CMD0009    Escape                  40   02-03-26  11:29:03.924203  OMC021C      OMSRUN51    *STMT    QCMD        QSYS        01CE   
+                                     From module . . . . . . . . :   OMC021C                                                        
+                                     From procedure  . . . . . . :   OMC021C                                                        
+                                     Statement . . . . . . . . . :   17400                                                          
+                                     Message . . . . :   Compile ended abnormally for V18T0269/OMX015 type *PGM                     
+                                       with detail                                                                                  
+                                     Cause . . . . . :   The compile ended abnormally. One or more errors have been                 
+                                       detected. Recovery. . . . :   Refer to the OMS-log and the joblog for more                   
+                                       detailed information. Correct the problem and try your request again.                        
+CPC2402    Completion              50   02-03-26  11:29:03.924597  QCMD         QSYS        0675     *EXT                    *N     
+                                     Message . . . . :   Job ended. Cancel message received at command processor.                   
+                                     Cause . . . . . :   A message with a severity equal to or exceeding the end                    
+                                       severity was received at the command processor. Recovery  . . . :   See the                  
+                                       messages previously listed to determine the message that caused the job to                   
+                                       be ended. Correct the errors, and then try the request again.                                
+CPC2191    Completion              00   02-03-26  11:29:03.932218  QLIDLOBJ     QSYS        079D     QLICLLIB    QSYS        0B64   
+                                     Message . . . . :   Object RETURNCODE in QTEMP type *DTAARA deleted.                           
+CPC2191    Completion              00   02-03-26  11:29:03.953394  QLIDLFIL     QSYS        00A0     QLICLLIB    QSYS        0B24   
+                                     Message . . . . :   Object QSQLTEMP1 in QTEMP type *FILE deleted.                              
+CPF1164    Completion              00   02-03-26  11:29:03.953581  QWTMCEOJ     QSYS        0161     *EXT                    *N     
+                                     Message . . . . :   Job 731889/REMAIN/OMX015 ended on 02-03-26 at 11:29:03;                     
+                                       .111 seconds used; end code 20 .                                                             
+                                     Cause . . . . . :   Job 731889/REMAIN/OMX015 completed on 02-03-26 at 11:29:03                  
+                                       after it used .111 seconds processing unit time. The maximum temporary                       
+                                       storage used was 48 megabytes. The job had ending code 20. The job ended                     
+                                       after 1 routing steps with a secondary ending code of 0.  The job ending                     
+                                       codes and their meanings are as follows:  0 - The job completed normally. 10                 
+                                       - The job completed normally during controlled ending or controlled                          
+                                       subsystem ending. 20 - The job exceeded end severity (ENDSEV job attribute).                 
+                                       30 - The job ended abnormally. 40 - The job ended before becoming active. 50                 
+                                       - The job ended while the job was active. 60 - The subsystem ended                           
+                                       abnormally while the job was active. 70 - The system ended abnormally while                  
+                                       the job was active. 80 - The job ended (ENDJOBABN command). 90 - The job was                 
+                                       forced to end after the time limit ended (ENDJOBABN command). Recovery  . .                  
+                                       . :   For more information, see the Work management topic collection in the                  
+                                       Systems management category in IBM i Documentation,                                          
+                                       https://www.ibm.com/docs/en/i.                                                               

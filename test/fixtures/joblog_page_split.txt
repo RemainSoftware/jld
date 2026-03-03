@@ -1,0 +1,35 @@
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     28-02-26  22:55:04 CET     Page    1  
+  Job name . . . . . . . . . . :   TESTSPLIT       User  . . . . . . :   REMAIN          Number . . . . . . . . . . . :   999999       
+  Job description  . . . . . . :   QDFTJOBD        Library . . . . . :   REMAINLIB                                                     
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+CPF1124    Information             00   28-02-26  13:10:12.467899  QWTPIIPP     QSYS        06F6     *EXT                    *N     
+                                     Message . . . . :   Job 999999/REMAIN/TESTSPLIT started on 28-02-26 at 13:10:12                  
+                                       in subsystem QINTER in QSYS. Job entered system on 28-02-26 at 13:10:12.                     
+CPF9801    Escape                  40   28-02-26  15:35:50.527168  QLICKOBJ     QSYS        0256     CHGENV      REMAINSYS   *STMT  
+                                     From module . . . . . . . . :   QLICKOBJ                                                       
+                                     From procedure  . . . . . . :   QLICKOBJ                                                       
+                                     Statement . . . . . . . . . :   0256                                                           
+                                     To module . . . . . . . . . :   CHGENV                                                         
+ 5770SS1 V7R6M0 250418                           Job Log                            PLATO     28-02-26  22:55:04 CET     Page    2  
+  Job name . . . . . . . . . . :   TESTSPLIT       User  . . . . . . :   REMAIN          Number . . . . . . . . . . . :   999999       
+  Job description  . . . . . . :   QDFTJOBD        Library . . . . . :   REMAINLIB                                                     
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST   
+                                     To procedure  . . . . . . . :   CHGENV                                                         
+                                     Statement . . . . . . . . . :   4200                                                           
+                                     Message . . . . :   Object ##SPLITOBJ in library *LIBL not found.                              
+                                     Cause . . . . . :   The object ##SPLITOBJ in library *LIBL type *PGM not found.                
+                                       The object name, library name, or the object type is not correct.  If the                    
+                                       library name is not specified, the object may be in a library that is not                    
+                                       contained in the library list. Recovery  . . . :   Correct the object name,                  
+                                       library name, or object type.  If the library name was not specified,                        
+                                       specify the library name and try the request again.                                          
+CPC2101    Completion              00   28-02-26  15:35:50.527383  QLICHLIB     QSYS        00D1     CHGENV      REMAINSYS   *STMT  
+                                     To module . . . . . . . . . :   CHGENV                                                         
+                                     To procedure  . . . . . . . :   CHGENV                                                         
+                                     Statement . . . . . . . . . :   15300                                                          
+                                     Message . . . . :   Library list changed.                                                      
+                                     Cause . . . . . :   The user library list was replaced by the specified list
+                                       of libraries.
+CPF1164    Completion              00   28-02-26  22:55:03.123456  QWTMCEOJ     QSYS        0020     *EXT                    *N     
+                                     Message . . . . :   Job 999999/REMAIN/TESTSPLIT ended on 28-02-26 at 22:55:03;
+                                       0.1 seconds used; end code 0 .

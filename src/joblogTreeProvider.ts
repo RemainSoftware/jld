@@ -1,0 +1,548 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2026 Remain BV
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// TreeDataProvider for Job Log Analyzer - provides custom tree view
+
+import * as vscode from 'vscode';
+import { ParsedJobLog, JobLogMessage, JobLogStats, TreeItemData, JobCompletionStatus } from './types';
+import { parseJobLog, groupMessages, filterMessages, getHighPriorityMessages } from './joblogParser';
+
+/**
+ * Tree item for the Job Log Analyzer view
+ */
+export class JobLogTreeItem extends vscode.TreeItem {
+    constructor(
+        public readonly data: TreeItemData,
+        public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+        public readonly message?: JobLogMessage
+    ) {
+        super(data.label, collapsibleState);
+        this.description = data.description;
+        this.tooltip = this.createTooltip();
+        this.contextValue = data.type;
+        
+        if (message) {
+            this.command = {
+                command: 'joblogAnalyzer.goToMessage',
+                title: 'Go to Message',
+                arguments: [message]
+            };
+        }
+        
+        this.iconPath = this.getIcon();
+    }
+    
+    private createTooltip(): vscode.MarkdownString | string {
+        if (!this.message) {
+            return this.data.label;
+        }
+        
+        const md = new vscode.MarkdownString();
+        md.appendMarkdown(`**${this.message.messageId}** - ${this.message.type}\n\n`);
+        md.appendMarkdown(`**Severity:** ${this.message.severity}\n\n`);
+        md.appendMarkdown(`**Time:** ${this.message.date} ${this.message.time}\n\n`);
+        
+        if (this.message.from.program) {
+            md.appendMarkdown(`**From:** ${this.message.from.program}`);
+            if (this.message.from.library) {
+                md.appendMarkdown(` (${this.message.from.library})`);
+            }
+            if (this.message.from.procedure) {
+                md.appendMarkdown(` - ${this.message.from.procedure}`);
+            }
+            md.appendMarkdown('\n\n');
+        }
+        
+        if (this.message.to.program) {
+            md.appendMarkdown(`**To:** ${this.message.to.program}`);
+            if (this.message.to.library) {
+                md.appendMarkdown(` (${this.message.to.library})`);
+            }
+            if (this.message.to.procedure) {
+                md.appendMarkdown(` - ${this.message.to.procedure}`);
+            }
+            md.appendMarkdown('\n\n');
+        }
+        
+        if (this.message.messageText) {
+            md.appendMarkdown(`**Message:**\n${this.message.messageText}\n\n`);
+        }
+        
+        if (this.message.cause) {
+            md.appendMarkdown(`**Cause:**\n${this.message.cause}\n\n`);
+        }
+        
+        if (this.message.recovery) {
+            md.appendMarkdown(`**Recovery:**\n${this.message.recovery}\n\n`);
+        }
+        
+        return md;
+    }
+    
+    private getIcon(): vscode.ThemeIcon {
+        // Custom icon from data
+        if (this.data.icon) {
+            let color: vscode.ThemeColor | undefined;
+            if (this.data.iconColor === 'error') {
+                color = new vscode.ThemeColor('errorForeground');
+            } else if (this.data.iconColor === 'warning') {
+                color = new vscode.ThemeColor('editorWarning.foreground');
+            } else if (this.data.iconColor === 'success') {
+                color = new vscode.ThemeColor('charts.green');
+            }
+            return new vscode.ThemeIcon(this.data.icon, color);
+        }
+        
+        if (this.data.type === 'root') {
+            return new vscode.ThemeIcon('file');
+        }
+        
+        if (this.data.type === 'category') {
+            const typeName = this.data.label.split(' ')[0];
+            switch (typeName) {
+                case 'Escape':
+                    return new vscode.ThemeIcon('error', new vscode.ThemeColor('errorForeground'));
+                case 'Diagnostic':
+                    return new vscode.ThemeIcon('warning', new vscode.ThemeColor('editorWarning.foreground'));
+                case 'Information':
+                    return new vscode.ThemeIcon('info');
+                case 'Completion':
+                    return new vscode.ThemeIcon('check');
+                case 'Command':
+                    return new vscode.ThemeIcon('terminal');
+                case 'Request':
+                    return new vscode.ThemeIcon('arrow-right');
+                case 'Inquiry':
+                    return new vscode.ThemeIcon('question');
+                case 'Reply':
+                    return new vscode.ThemeIcon('reply');
+                case 'Notify':
+                    return new vscode.ThemeIcon('bell');
+                case 'High':
+                    return new vscode.ThemeIcon('flame', new vscode.ThemeColor('errorForeground'));
+                case 'Summary':
+                    return new vscode.ThemeIcon('graph');
+                default:
+                    return new vscode.ThemeIcon('symbol-event');
+            }
+        }
+        
+        if (this.data.type === 'messageGroup') {
+            if (this.data.severity !== undefined && this.data.severity >= 30) {
+                return new vscode.ThemeIcon('circle-filled', new vscode.ThemeColor('errorForeground'));
+            }
+            return new vscode.ThemeIcon('symbol-constant');
+        }
+        
+        if (this.data.type === 'message' && this.message) {
+            const severity = this.message.severity;
+            if (severity >= 40) {
+                return new vscode.ThemeIcon('error', new vscode.ThemeColor('errorForeground'));
+            }
+            if (severity >= 30) {
+                return new vscode.ThemeIcon('warning', new vscode.ThemeColor('editorWarning.foreground'));
+            }
+            if (severity >= 20) {
+                return new vscode.ThemeIcon('info');
+            }
+            return new vscode.ThemeIcon('circle-outline');
+        }
+        
+        return new vscode.ThemeIcon('symbol-event');
+    }
+}
+
+/**
+ * Tree data provider for the Job Log Analyzer view
+ */
+export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTreeItem> {
+    private _onDidChangeTreeData: vscode.EventEmitter<JobLogTreeItem | undefined | null | void> = new vscode.EventEmitter<JobLogTreeItem | undefined | null | void>();
+    readonly onDidChangeTreeData: vscode.Event<JobLogTreeItem | undefined | null | void> = this._onDidChangeTreeData.event;
+    
+    private parsedLog: ParsedJobLog | undefined;
+    private document: vscode.TextDocument | undefined;
+    private hideCommand: boolean = true;
+    private minSeverity: number = 0;
+    private filterTypes: Set<string> = new Set();
+    private showHighSeverityOnly: boolean = false;
+    private messageIdPattern: string = '';
+    
+    constructor() {
+        // Listen to configuration changes
+        vscode.workspace.onDidChangeConfiguration(e => {
+            if (e.affectsConfiguration('joblogAnalyzer')) {
+                this.loadConfig();
+                this.refresh();
+            }
+        });
+        
+        this.loadConfig();
+    }
+    
+    private loadConfig(): void {
+        const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+        this.hideCommand = config.get<boolean>('hideCommandMessages', true);
+    }
+    
+    /**
+     * Set the document to analyze
+     */
+    public setDocument(document: vscode.TextDocument | undefined): void {
+        this.document = document;
+        if (document) {
+            const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+            const threshold = config.get<number>('highSeverityThreshold', 30);
+            this.parsedLog = parseJobLog(document.getText(), threshold);
+        } else {
+            this.parsedLog = undefined;
+        }
+        this.refresh();
+    }
+    
+    /**
+     * Get the current parsed log
+     */
+    public getParsedLog(): ParsedJobLog | undefined {
+        return this.parsedLog;
+    }
+    
+    /**
+     * Refresh the tree view
+     */
+    public refresh(): void {
+        this._onDidChangeTreeData.fire();
+    }
+    
+    /**
+     * Toggle hiding command messages
+     */
+    public toggleHideCommand(): void {
+        this.hideCommand = !this.hideCommand;
+        this.refresh();
+    }
+    
+    /**
+     * Set minimum severity filter
+     */
+    public setMinSeverity(severity: number): void {
+        this.minSeverity = severity;
+        this.refresh();
+    }
+    
+    /**
+     * Toggle filter by message type
+     */
+    public toggleTypeFilter(type: string): void {
+        if (this.filterTypes.has(type)) {
+            this.filterTypes.delete(type);
+        } else {
+            this.filterTypes.add(type);
+        }
+        this.refresh();
+    }
+    
+    /**
+     * Clear all type filters
+     */
+    public clearTypeFilters(): void {
+        this.filterTypes.clear();
+        this.refresh();
+    }
+    
+    /**
+     * Toggle showing only high severity messages
+     */
+    public toggleHighSeverityOnly(): void {
+        this.showHighSeverityOnly = !this.showHighSeverityOnly;
+        this.refresh();
+    }
+    
+    /**
+     * Set message ID filter pattern
+     * Supports glob-like patterns: SQL*, CPF*, etc.
+     */
+    public setMessageIdPattern(pattern: string): void {
+        this.messageIdPattern = pattern;
+        this.refresh();
+    }
+    
+    /**
+     * Get current message ID pattern
+     */
+    public getMessageIdPattern(): string {
+        return this.messageIdPattern;
+    }
+    
+    /**
+     * Clear all filters
+     */
+    public clearAllFilters(): void {
+        this.filterTypes.clear();
+        this.messageIdPattern = '';
+        this.showHighSeverityOnly = false;
+        this.minSeverity = 0;
+        this.refresh();
+    }
+    
+    /**
+     * Get current filter summary
+     */
+    public getFilterSummary(): string {
+        const filters: string[] = [];
+        if (this.filterTypes.size > 0) {
+            filters.push(`Types: ${Array.from(this.filterTypes).join(', ')}`);
+        }
+        if (this.messageIdPattern) {
+            filters.push(`ID: ${this.messageIdPattern}`);
+        }
+        if (this.showHighSeverityOnly) {
+            filters.push('High severity only');
+        }
+        if (this.minSeverity > 0) {
+            filters.push(`Min SEV: ${this.minSeverity}`);
+        }
+        return filters.length > 0 ? filters.join('; ') : 'No filters';
+    }
+    
+    /**
+     * Get tree item for an element
+     */
+    getTreeItem(element: JobLogTreeItem): vscode.TreeItem {
+        return element;
+    }
+    
+    /**
+     * Get children of an element
+     */
+    getChildren(element?: JobLogTreeItem): Thenable<JobLogTreeItem[]> {
+        if (!this.parsedLog || !this.parsedLog.isValid) {
+            return Promise.resolve([]);
+        }
+        
+        if (!element) {
+            return Promise.resolve(this.getRootItems());
+        }
+        
+        if (element.data.children) {
+            return Promise.resolve(
+                element.data.children.map(child => {
+                    const state = child.children && child.children.length > 0
+                        ? vscode.TreeItemCollapsibleState.Collapsed
+                        : vscode.TreeItemCollapsibleState.None;
+                    return new JobLogTreeItem(child, state, child.message);
+                })
+            );
+        }
+        
+        return Promise.resolve([]);
+    }
+    
+    /**
+     * Get root-level items for the tree
+     */
+    private getRootItems(): JobLogTreeItem[] {
+        if (!this.parsedLog) {
+            return [];
+        }
+        
+        const items: JobLogTreeItem[] = [];
+        const config = vscode.workspace.getConfiguration('joblogAnalyzer');
+        const highSeverityThreshold = config.get<number>('highSeverityThreshold', 30);
+        
+        // Apply all filters using filterMessages
+        const messages = filterMessages(this.parsedLog.messages, {
+            hideCommand: this.hideCommand,
+            minSeverity: this.showHighSeverityOnly ? highSeverityThreshold : this.minSeverity,
+            types: this.filterTypes.size > 0 ? this.filterTypes : undefined,
+            messageIdPattern: this.messageIdPattern || undefined
+        });
+        
+        // Add summary item
+        const filterSummary = this.getFilterSummary();
+        const summaryDesc = filterSummary !== 'No filters' 
+            ? `${messages.length} of ${this.parsedLog.messages.length} | ${filterSummary}`
+            : `${messages.length} messages`;
+        const summaryData: TreeItemData = {
+            type: 'category',
+            label: 'Summary',
+            description: summaryDesc,
+            children: this.createStatsChildren(this.parsedLog.stats, this.parsedLog.completion)
+        };
+        items.push(new JobLogTreeItem(summaryData, vscode.TreeItemCollapsibleState.Expanded));
+        
+        // Add high priority messages section
+        const highPriority = getHighPriorityMessages(messages, { highSeverityThreshold });
+        if (highPriority.length > 0) {
+            const highPriorityData: TreeItemData = {
+                type: 'category',
+                label: `High Priority (${highPriority.length})`,
+                description: 'Recent high severity messages',
+                children: highPriority.map(msg => this.createMessageData(msg))
+            };
+            items.push(new JobLogTreeItem(highPriorityData, vscode.TreeItemCollapsibleState.Expanded));
+        }
+        
+        // Group by type
+        const typeGroups = groupMessages(messages, m => m.type);
+        
+        // Sort types by priority
+        const sortedTypes = Array.from(typeGroups.keys()).sort((a, b) => {
+            return this.getTypePriority(a) - this.getTypePriority(b);
+        });
+        
+        for (const type of sortedTypes) {
+            const typeMessages = typeGroups.get(type) || [];
+            if (typeMessages.length === 0) {continue;}
+            
+            // Group by message ID
+            const idGroups = groupMessages(typeMessages, m => m.messageId);
+            const children: TreeItemData[] = [];
+            
+            // Sort message IDs by count descending
+            const sortedIds = Array.from(idGroups.keys()).sort((a, b) => {
+                const countA = idGroups.get(a)?.length || 0;
+                const countB = idGroups.get(b)?.length || 0;
+                return countB - countA;
+            });
+            
+            for (const msgId of sortedIds) {
+                const idMessages = idGroups.get(msgId) || [];
+                const maxSeverity = Math.max(...idMessages.map(m => m.severity));
+                
+                const idData: TreeItemData = {
+                    type: 'messageGroup',
+                    label: `${msgId} (${idMessages.length})`,
+                    description: maxSeverity > 0 ? `SEV ${maxSeverity}` : undefined,
+                    severity: maxSeverity,
+                    count: idMessages.length,
+                    children: idMessages.map(msg => this.createMessageData(msg))
+                };
+                children.push(idData);
+            }
+            
+            const typeData: TreeItemData = {
+                type: 'category',
+                label: `${type} (${typeMessages.length})`,
+                children
+            };
+            
+            const state = type === 'Escape' || type === 'Diagnostic'
+                ? vscode.TreeItemCollapsibleState.Expanded
+                : vscode.TreeItemCollapsibleState.Collapsed;
+            
+            items.push(new JobLogTreeItem(typeData, state));
+        }
+        
+        return items;
+    }
+    
+    /**
+     * Create tree item data for a message
+     */
+    private createMessageData(msg: JobLogMessage): TreeItemData {
+        const timeStr = msg.time.split('.')[0]; // Remove microseconds
+        const shortText = msg.messageText
+            ? msg.messageText.substring(0, 50) + (msg.messageText.length > 50 ? '...' : '')
+            : `Line ${msg.lineNumber}`;
+        
+        return {
+            type: 'message',
+            label: `${timeStr} - ${msg.messageId}`,
+            description: shortText,
+            message: msg,
+            severity: msg.severity
+        };
+    }
+    
+    /**
+     * Create children for the stats summary
+     */
+    private createStatsChildren(stats: JobLogStats, completion?: JobCompletionStatus): TreeItemData[] {
+        const children: TreeItemData[] = [];
+        
+        // Job completion status - show first if available
+        if (completion) {
+            const statusIcon = completion.success ? '✓' : '✗';
+            const statusLabel = completion.success 
+                ? `${statusIcon} Job Completed Successfully` 
+                : `${statusIcon} Job Ended Abnormally (End Code ${completion.endCode})`;
+            children.push({
+                type: 'root',
+                label: statusLabel,
+                description: completion.endCodeDescription,
+                icon: completion.success ? 'check' : 'error',
+                iconColor: completion.success ? 'success' : 'error'
+            });
+            
+            if (completion.processingTime) {
+                children.push({
+                    type: 'root',
+                    label: `Processing Time: ${completion.processingTime}`,
+                });
+            }
+        }
+        
+        children.push({
+            type: 'root',
+            label: `Total: ${stats.totalMessages}`,
+            description: `(${stats.highSeverityCount} high severity)`
+        });
+        
+        if (stats.escapeCount > 0) {
+            children.push({
+                type: 'root',
+                label: `Escape: ${stats.escapeCount}`,
+                description: 'Program termination messages'
+            });
+        }
+        
+        if (stats.diagnosticCount > 0) {
+            children.push({
+                type: 'root',
+                label: `Diagnostic: ${stats.diagnosticCount}`,
+                description: 'Error messages'
+            });
+        }
+        
+        return children;
+    }
+    
+    /**
+     * Get priority for sorting types
+     */
+    private getTypePriority(type: string): number {
+        switch (type) {
+            case 'Escape': return 1;
+            case 'Diagnostic': return 2;
+            case 'Information': return 3;
+            case 'Inquiry': return 4;
+            case 'Notify': return 5;
+            case 'Completion': return 6;
+            case 'Reply': return 7;
+            case 'Request': return 8;
+            case 'Command': return 9;
+            default: return 10;
+        }
+    }
+}

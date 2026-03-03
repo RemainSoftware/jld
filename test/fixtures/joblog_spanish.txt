@@ -1,0 +1,667 @@
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 1
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+CPF1124 Informativo 00 20/05/22 12:51:14,224361 QWTPIIPP QSYS 04C9 *EXT *N
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Trabajo 371678/REMAIN/QZRCSRVS arrancado el 20/05/22 a las
+ 12:51:14 en el subsistema QUSRWRK en QSYS. Trabajo introducido en el sistema
+ el 20/05/22 a las 12:51:14.
+CPIAD02 Informativo 00 20/05/22 12:51:17,675057 QZBSSECR QSYS *STMT QZBSSECR QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QZBSSECR
+ Procedimiento origen . . . : QzbsCheckSwapResults__FiP17QzbsStrSrvRequestP1
+ 2QzbsStdReplyP14QzbsReplyHdr_tPA10_cPcPiPsP16sockaddr_storageN27
+ Sentencia . . . . . . . . . : 315
+ Módulo destino . . . . . . : QZBSSECR
+ Procedimiento destino . . . : QzbsCheckSwapResults__FiP17QzbsStrSrvRequestP1
+ 2QzbsStdReplyP14QzbsReplyHdr_tPA10_cPcPiPsP16sockaddr_storageN27
+ Sentencia . . . . . . . . . : 315
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : El usuario REMAIN del cliente 172.29.60.11 está conectado
+ a un servidor.
+ Causa . . . . . : El perfil de usuario REMAIN del cliente 172.29.60.11 está
+ conectado actualmente a este trabajo de servidor. El nombre del cliente es
+ un nombre de sistema remoto TCP/IP, una dirección IP decimal con puntos, el
+ nomrbe de host local o una dirección IPv6.
+CPC2196 Terminación 00 20/05/22 12:51:17,691882 QLICHLBL QSYS 0149 QLILIBL QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QLILIBL
+ Procedimiento destino . . . : chgslibl
+ Sentencia . . . . . . . . . : 21
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca QSYS2931 añadida a la lista de bibliotecas.
+ Causa . . . . . : Si se utilizó el mandato ADDLIBLE, se añadió QSYS2931 a la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ añadió QSYS2931 a la porción de sistema de la lista de bibliotecas.
+CPC2206 Terminación 00 20/05/22 12:51:17,731862 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto ZRCRPCSPC en
+ QTEMP del tipo *USRSPC.
+ Causa . . . . . : Se ha modificado la autoridad del objeto ZRCRPCSPC del
+ tipo *USRSPC de la biblioteca QTEMP.
+CPF5C61 Informativo 00 20/05/22 12:51:17,735801 QZRCSRVS QSYS *STMT QZRCSRVS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QZRCRPC
+ Procedimiento origen . . . : LogRpcMessage
+ Sentencia . . . . . . . . . : 13
+ Módulo destino . . . . . . : QZRCRPC
+ Procedimiento destino . . . : LogRpcMessage
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Petición de cliente - ejecutar programa QSYS/QUSROBJD.
+CPF5C61 Informativo 00 20/05/22 12:51:17,823487 QZRCSRVS QSYS *STMT QZRCSRVS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QZRCRPC
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 2
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Procedimiento origen . . . : LogRpcMessage
+ Sentencia . . . . . . . . . : 13
+ Módulo destino . . . . . . : QZRCRPC
+ Procedimiento destino . . . : LogRpcMessage
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Petición de cliente - ejecutar programa OMS/OMX996.
+CPF2104 Escape 40 20/05/22 12:51:17,824627 QLICHLBL QSYS 02ED OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 184600
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca OMS no eliminada de la lista de bibliotecas.
+ Causa . . . . . : La biblioteca OMS no está en la parte del usuario (tipo
+ USR) de la lista de bibliotecas y por tanto no puede eliminarse.
+ Recuperación . .: Visualice la lista de bibliotecas (DSPLIBL) para
+ determinar si el nombre de biblioteca especificado es correcto o si la
+ biblioteca especificada está en la parte del sistema (tipo SYS) de la lista
+ de bibliotecas. Si la biblioteca es una biblioteca producto (tipo PRD), se
+ eliminará cuando se complete este mandato. Si la biblioteca está en la
+ posición de biblioteca actual (tipo CUR) de la lista de bibliotecas, utilice
+ el mandato CHGCURLIB para eliminar la biblioteca de la posición de
+ biblioteca actual de la lista de bibliotecas. Si el nombre de biblioteca es
+ incorrecto, cambie el nombre de biblioteca y vuelva a intentar el mandato.
+CPC2196 Terminación 00 20/05/22 12:51:17,824812 QLICUSRL QSYS 0114 OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 185100
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca OMS añadida a la lista de bibliotecas.
+ Causa . . . . . : Si se utilizó el mandato ADDLIBLE, se añadió OMS a la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ añadió OMS a la porción de sistema de la lista de bibliotecas.
+CPC2197 Terminación 00 20/05/22 12:51:17,829154 QLICHLBL QSYS 0149 OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 181900
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca OMS eliminada de la lista de bibliotecas.
+ Causa . . . . . : Si se utilizó el mandato RMVLIBLE, se eliminó OMS de la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ eliminó OMS de la porción de sistema de la lista de bibliotecas.
+CPC2196 Terminación 00 20/05/22 12:51:17,829216 QLICUSRL QSYS 0114 OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 183000
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca OMS añadida a la lista de bibliotecas.
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 3
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Causa . . . . . : Si se utilizó el mandato ADDLIBLE, se añadió OMS a la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ añadió OMS a la porción de sistema de la lista de bibliotecas.
+CPC2197 Terminación 00 20/05/22 12:51:17,829268 QLICHLBL QSYS 0149 OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 181900
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca QUTSYS eliminada de la lista de bibliotecas.
+ Causa . . . . . : Si se utilizó el mandato RMVLIBLE, se eliminó QUTSYS de la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ eliminó QUTSYS de la porción de sistema de la lista de bibliotecas.
+CPC2196 Terminación 00 20/05/22 12:51:17,829323 QLICUSRL QSYS 0114 OMX996 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX996
+ Procedimiento destino . . . : OMX996
+ Sentencia . . . . . . . . . : 183000
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Biblioteca QUTSYS añadida a la lista de bibliotecas.
+ Causa . . . . . : Si se utilizó el mandato ADDLIBLE, se añadió QUTSYS a la
+ lista de bibliotecas del usuario. Si se utilizó el mandato CHGSYSLIBL, se
+ añadió QUTSYS a la porción de sistema de la lista de bibliotecas.
+CPC2206 Terminación 00 20/05/22 12:51:17,886092 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto OMSUSR en QTEMP
+ del tipo *USRSPC.
+ Causa . . . . . : Se ha modificado la autoridad del objeto OMSUSR del tipo
+ *USRSPC de la biblioteca QTEMP.
+OTP0017 Informativo 00 20/05/22 12:51:17,922245 OMX901C OMS *STMT OMC022 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMX901C
+ Procedimiento origen . . . : OMX901C
+ Sentencia . . . . . . . . . : 8906
+ Módulo destino . . . . . . : OMC022
+ Procedimiento destino . . . : OMC022
+ Sentencia . . . . . . . . . : 225100
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Start compile for object LAUSMOD/SAL815M type *PGM in
+ library LAUSMOD for detail *NONE
+ Cause . . . . . : Compilation started for object SAL815M with type *PGM and
+ detail *NONE in library LAUSMOD. The related Fix A5319 is registered in
+ application ENTSF. Recovery . . . : No recovery necessary. This is an
+ informational message.
+CPC2101 Terminación 00 20/05/22 12:51:17,965848 QLICHLIB QSYS 00D1 OMX960C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX960C
+ Procedimiento destino . . . : OMX960C
+ Sentencia . . . . . . . . . : 9900
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Lista de bibliotecas cambiada.
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 4
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Causa . . . . . : Se sustituyó la lista de bibliotecas de usuario por la
+ lista de bibliotecas especificada.
+CPC7301 Terminación 00 20/05/22 12:51:17,994179 QDDCPF QSYS 056D PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 10400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Archivo DATOS creado en la biblioteca QTEMP.
+CPC7305 Terminación 00 20/05/22 12:51:18,006932 QDDCPFM QSYS 005B PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 10400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro DATOS añadido a archivo DATOS en QTEMP.
+CPC3101 Terminación 00 20/05/22 12:51:18,015430 QDBCLRPF QSYS 02B4 PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 10600
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro DATOS archivo DATOS de QTEMP borrado.
+CPF9861 Informativo 00 20/05/22 12:51:18,054082 QWHOUTFL QSYS 01D4 QC2SYS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QC2SYS
+ Procedimiento destino . . . : system
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha creado el archivo de salida MBRLST en la biblioteca
+ QTEMP.
+CPF9862 Informativo 00 20/05/22 12:51:18,063837 QWHOUTFL QSYS 01D4 QC2SYS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QC2SYS
+ Procedimiento destino . . . : system
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : El miembro MBRLST se ha añadido al archivo de salida
+ MBRLST en la biblioteca QTEMP.
+CPF3030 Diagnóstico 00 20/05/22 12:51:18,114385 QWHFDOUT QSYS 113F QC2SYS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QC2SYS
+ Procedimiento destino . . . : system
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se añadieron 327 registros al miembro MBRLST en el archivo
+ MBRLST en QTEMP.
+ Causa . . . . . : Se añadieron 327 registros al miembro MBRLST en el archivo
+ MBRLST en la biblioteca QTEMP.
+CPC2191 Terminación 00 20/05/22 12:51:18,165387 QLIDLOBJ QSYS 06E6 QC2SYS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QC2SYS
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 5
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Procedimiento destino . . . : system
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha suprimido el objeto MBRLST en QTEMP tipo *FILE.
+CPC7309 Terminación 00 20/05/22 12:51:18,204665 QDDDMBR QSYS 0201 PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 12300
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro SAL815M eliminado de archivo EVFEVENT en LAUSMOD.
+CPC2206 Terminación 00 20/05/22 12:51:18,220146 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto ARACTL en QTEMP
+ del tipo *DTAARA.
+ Causa . . . . . : Se ha modificado la autoridad del objeto ARACTL del tipo
+ *DTAARA de la biblioteca QTEMP.
+CPC0904 Terminación 00 20/05/22 12:51:18,222809 QWCCCRVC QSYS 0099 PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 24500
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Área de datos ARACTL creada en biblioteca QTEMP.
+CPC7301 Terminación 00 20/05/22 12:51:18,252943 QDDCPF QSYS 056D PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 25900
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Archivo QSQLPRE creado en la biblioteca QTEMP.
+CPC7305 Terminación 00 20/05/22 12:51:18,288323 QDDCPFM QSYS 005B QC2SYS QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QC2SYS
+ Procedimiento destino . . . : system
+ Sentencia . . . . . . . . . : 13
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro SAL815M añadido a archivo EVFEVENT en LAUSMOD.
+CPC2206 Terminación 00 20/05/22 12:51:18,296292 QSYCHONR QSYS 0603 PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 56401
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto SAL815M en
+ LAUSMOD del tipo *PGM.
+ Causa . . . . . : Se ha modificado la autoridad del objeto SAL815M del tipo
+ *PGM de la biblioteca LAUSMOD.
+CPC7305 Terminación 00 20/05/22 12:51:18,334029 QDDCPFM QSYS 005B QRN4CPP QDEVTOOLS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : GRP4SYSP
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 6
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Procedimiento destino . . . : doSystemCommand
+ Sentencia . . . . . . . . . : 3
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro SAL815M añadido a archivo QSQLPRE en QTEMP.
+RNS9307 Terminación 00 20/05/22 12:51:18,618838 QRN4CPP QDEVTOOLS *STMT QSQPRUN QSQL 0783
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : GRP4CPP
+ Procedimiento origen . . . : cleanup
+ Sentencia . . . . . . . . . : 19
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : La comprobación de diagnósticos del fuente se ha
+ completado. La gravedad más alta es 10.
+ Causa . . . . . : La comprobación de diagnósticos del miembro fuente
+ especificado se ha completado. La gravedad de mensaje más alta resultante ha
+ sido 10. Recuperación . : Ninguna.
+CPC2206 Terminación 00 20/05/22 12:51:18,628298 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto RETURNCODE en
+ QTEMP del tipo *DTAARA.
+ Causa . . . . . : Se ha modificado la autoridad del objeto RETURNCODE del
+ tipo *DTAARA de la biblioteca QTEMP.
+CPC0904 Terminación 00 20/05/22 12:51:18,630686 QWCCCRVC QSYS 0099 QRN4CPP QDEVTOOLS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : GRP4CPP
+ Procedimiento destino . . . : update_dtaara
+ Sentencia . . . . . . . . . : 8
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Área de datos RETURNCODE creada en biblioteca QTEMP.
+CPC7301 Terminación 00 20/05/22 12:51:18,648100 QDDCPF QSYS 056D QSQPMAIN QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QSQPMAIN
+ Procedimiento destino . . . : CRTFILE
+ Sentencia . . . . . . . . . : 15124
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Archivo QSQLT00122 creado en la biblioteca QTEMP.
+CPC7305 Terminación 00 20/05/22 12:51:18,659052 QDDCPFM QSYS 005B QSQPMAIN QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : QSQPMAIN
+ Procedimiento destino . . . : CRTFILE
+ Sentencia . . . . . . . . . : 15124
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Miembro SAL815M añadido a archivo QSQLT00122 en QTEMP.
+CPC2206 Terminación 00 20/05/22 12:51:18,975486 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto QRNFER en QTEMP
+ del tipo *USRSPC.
+ Causa . . . . . : Se ha modificado la autoridad del objeto QRNFER del tipo
+ *USRSPC de la biblioteca QTEMP.
+CPC2206 Terminación 00 20/05/22 12:51:19,000006 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 7
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto QRNFEF en QTEMP
+ del tipo *USRSPC.
+ Causa . . . . . : Se ha modificado la autoridad del objeto QRNFEF del tipo
+ *USRSPC de la biblioteca QTEMP.
+CPC2206 Terminación 00 20/05/22 12:51:19,721877 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto SAL815M en QTEMP
+ del tipo *MODULE.
+ Causa . . . . . : Se ha modificado la autoridad del objeto SAL815M del tipo
+ *MODULE de la biblioteca QTEMP.
+CPC2206 Terminación 00 20/05/22 12:51:19,901777 QLIINSRT QSYS 023A QLIINSRT QSYS 023A
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto SAL815M en
+ LAUSMOD del tipo PGM.
+ Causa . . . . . : Se ha modificado la autoridad del objeto SAL815M del tipo
+ PGM de la biblioteca LAUSMOD.
+CPI2119 Informativo 00 20/05/22 12:51:19,920458 QLIINSRT QSYS 08F9 QBNINSOB QSYS 0249
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se han ignorado los valores de parámetro AUT y USRPRF.
+ Causa . . . . . : Los valores de parámetro AUT y USRPRF se han ignorado
+ porque se ha especificado REPLACE(*YES). Por tanto, el objeto existente se
+ ha utilizado como origen de la autorización. Todas las autorizaciones de uso
+ privado y público, y los atributos USRPRF y USEADPAUT se han copiado del
+ objeto existente al nuevo objeto SAL815M tipo *PGM de la biblioteca LAUSMOD.
+ Recuperación . .: Visualice la autorización del objeto (mandato DSPOBJAUT)
+ para determinar si la autorización para el objeto SAL815M tipo *PGM de la
+ biblioteca LAUSMOD tiene que cambiarse. Otorgue la autorización sobre
+ objetos (mandato GRTOBJAUT) o revóquela (mandato RVKOBJAUT) para cambiar, si
+ es necesario, la autorización para el objeto SAL815M tipo *PGM de la
+ biblioteca LAUSMOD.
+CPI2121 Informativo 00 20/05/22 12:51:19,924866 QLIREINS QSYS 02D1 QLIINSRT QSYS 06B3
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : El objeto sustituido SAL815M de tipo *PGM se ha trasladado
+ a QRPLOBJ.
+ Causa . . . . . : El objeto sustituido SAL815M de tipo *PGM de la biblioteca
+ LAUSMOD ha pasado a llamarse Q09BEDCC8A y se ha trasladado a la biblioteca
+ QRPLOBJ. Recuperación . .: Si el objeto sustituido es necesario, puede
+ utilizar el mandato Mover objeto (MOVOBJ) para trasladar el objeto desde la
+ biblioteca QRPLOBJ a otra biblioteca. La biblioteca QRPLOBJ se borrará
+ durante la próxima carga del programa inicial (IPL) del sistema. La
+ biblioteca QRPLxxxxx (siendo 'xxxxx' el número de una agrupación de
+ almacenamiento auxiliar (ASP) primaria) se borrará durante la próxima
+ activación del dispositivo de ASP.
+RNS9304 Terminación 00 20/05/22 12:51:19,943427 QRN4CPP QDEVTOOLS *STMT PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : GRP4CPP
+ Procedimiento origen . . . : cleanup
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 8
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Sentencia . . . . . . . . . : 19
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 56500
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : El programa SAL815M se ha situado en la biblioteca
+ LAUSMOD. La gravedad más alta es 00. Creado el 20/05/22 a las 12:51:19.
+ Causa . . . . . : Se ha creado satisfactoriamente el programa SAL815M en la
+ biblioteca LAUSMOD. La gravedad de mensaje más alta originada ha sido 00. La
+ fecha y hora de creación del programa son 20/05/22 y 12:51:19.
+CPC2206 Terminación 00 20/05/22 12:51:19,947796 QSYCHONR QSYS 0603 PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 57301
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto SAL815M en
+ LAUSMOD del tipo *PGM.
+ Causa . . . . . : Se ha modificado la autoridad del objeto SAL815M del tipo
+ *PGM de la biblioteca LAUSMOD.
+CPC0541 Terminación 00 20/05/22 12:51:19,949877 QCLCHGPG QSYS 076F PDMCPCLN QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : PDMCPCLN
+ Procedimiento destino . . . : PDMCPCLN
+ Sentencia . . . . . . . . . : 57400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : No se necesitan cambios en el programa SAL815M de LAUSMOD.
+ Causa . . . . . : No se ha especificado ningún cambio para el programa
+ SAL815M de la biblioteca LAUSMOD, o el cambio solicitado especifica los
+ valores actuales de los atributos del programa.
+CPC2206 Terminación 00 20/05/22 12:51:19,987015 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto SAL815M en QTEMP
+ del tipo *FILE.
+ Causa . . . . . : Se ha modificado la autoridad del objeto SAL815M del tipo
+ *FILE de la biblioteca QTEMP.
+CMD0007 Informativo 00 20/05/22 12:51:20,103990 OMX901C OMS *STMT OMC022 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMX901C
+ Procedimiento origen . . . : OMX901C
+ Sentencia . . . . . . . . . : 8906
+ Módulo destino . . . . . . : OMC022
+ Procedimiento destino . . . : OMC022
+ Sentencia . . . . . . . . . : 225100
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Executed: PDMCPRDI OBJLIB(LAUSMOD) OBJ(SAL815M)
+ LIB(LAUSMOD) FILE(QRPGSRC) SRCMBR(SAL815M) TXT('') OPTION(*EVENTF) OPC(CMS)
+CPI2216 Informativo 00 20/05/22 12:51:20,114009 QSYGRAUT QSYS 1307 QSYGRAUT QSYS 1307
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha cambiado la lista de autorizaciones que aseguraba el
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 9
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ objeto SAL815M.
+ Causa . . . . . : Se ha cambiado de QS_PGM a QS_PGM la lista de
+ autorizaciones que aseguraba el objeto SAL815M en LAUSMOD tipo *PGM.
+CPC2201 Terminación 00 20/05/22 12:51:20,114058 QSYGRAUT QSYS 1307 OMSAUTS QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMSAUTS
+ Procedimiento destino . . . : OMSAUTS
+ Sentencia . . . . . . . . . : 11400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha otorgado autorización sobre el objeto.
+CPI2201 Informativo 00 20/05/22 12:51:20,114372 QSYGRAUT QSYS 1307 QSYGRAUT QSYS 1307
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha dado autorización al usuario *PUBLIC para el objeto
+ SAL815M de LAUSMOD tipo de objeto *PGM.
+CPC2201 Terminación 00 20/05/22 12:51:20,114410 QSYGRAUT QSYS 1307 OMSAUTS QUTSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMSAUTS
+ Procedimiento destino . . . : OMSAUTS
+ Sentencia . . . . . . . . . : 11600
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha otorgado autorización sobre el objeto.
+CMD0007 Informativo 00 20/05/22 12:51:20,114873 OMX901C OMS *STMT OMC022 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMX901C
+ Procedimiento origen . . . : OMX901C
+ Sentencia . . . . . . . . . : 8906
+ Módulo destino . . . . . . : OMC022
+ Procedimiento destino . . . : OMC022
+ Sentencia . . . . . . . . . : 225100
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Executed: OMSAUTS OBJLIB(LAUSMOD) OBJ(SAL815M)
+ LIB(LAUSMOD) FILE(QRPGSRC) SRCMBR(SAL815M)
+OMQ1017 Terminación 00 20/05/22 12:51:20,125196 OMX998C OMS *STMT OMC022 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMX998C
+ Procedimiento origen . . . : OMX998C
+ Sentencia . . . . . . . . . : 14200
+ Módulo destino . . . . . . : OMC022
+ Procedimiento destino . . . : OMC022
+ Sentencia . . . . . . . . . : 190400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Object LAUSMOD/SAL815M type *PGM changed.
+ Cause . . . . . : You have requested an operation for object SAL815M, type
+ *PGM in library LAUSMOD. The operation completed normally. Recovery . . . :
+ None needed, this message is informational
+CMD0007 Informativo 00 20/05/22 12:51:20,125712 OMX901C OMS *STMT OMC022 OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMX901C
+ Procedimiento origen . . . : OMX901C
+ Sentencia . . . . . . . . . : 8906
+ Módulo destino . . . . . . : OMC022
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 10
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Procedimiento destino . . . : OMC022
+ Sentencia . . . . . . . . . : 225100
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Executed: CHGOBJDOMS OBJ(LAUSMOD/SAL815M) OBJTYPE(*PGM)
+ FILE(LAUSMOD/QRPGSRC) MEMBER(SAL815M)
+CPC2101 Terminación 00 20/05/22 12:51:20,135193 QLICHLIB QSYS 00D1 OMX960C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo destino . . . . . . : OMX960C
+ Procedimiento destino . . . : OMX960C
+ Sentencia . . . . . . . . . : 9900
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Lista de bibliotecas cambiada.
+ Causa . . . . . : Se sustituyó la lista de bibliotecas de usuario por la
+ lista de bibliotecas especificada.
+CPF4028 Diagnóstico 10 20/05/22 12:51:20,202240 QDBOPEN QSYS *STMT OMQCHGEV OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QDBOPEN
+ Procedimiento origen . . . : SGNRTNOK
+ Sentencia . . . . . . . . . : 16538
+ Módulo destino . . . . . . : OMQCHGEV
+ Procedimiento destino . . . : ADDEVENT
+ Sentencia . . . . . . . . . : *N
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : La apertura del miembro OMEVTL1 ha cambiado a
+ SEQONLY(*YES).
+ Causa . . . . . : Miembro OMEVTL1 archivo OMEVTL1 bibl. OMS se abrió con
+ parám. SEQONLY(*YES) especificado en programa o mdt. Alterar temporalmente
+ arch. base datos (OVRDBF). Sin embargo, el parámetro se ha cambiado a
+ SEQONLY(*NO) debido a la condición 1 mostrada más abajo: 1 - Programa abrió
+ miembro OMEVTL1 solo para operaciones de salida y especificó SEQONLY(*YES)
+ con núm. de registros por omisión. Se ha cambiado SEQONLY(*YES) a
+ SEQONLY(*NO) para permitir que el programa maneje claves duplicadas,
+ correlaciones de conversión, correlaciones de clave y errores de selección u
+ omisión, o errores de selección y de omisión en el momento de la operación
+ de salida. 2 -- Programa abrió miembro para operaciones distintas de solo
+ entrada o salida. 3 -- Programa abrió miembro de arch. lógico para
+ operaciones solo de salida y el miembro está basado en más de un miembro de
+ arch. físico. 4 -- La longit. de registro más la información de retorno del
+ miembro sobrepasa 32767 bytes. 5 -- El nivel de control compromiso *ALL está
+ activo y el miembro se abrió para operaciones solo de entrada, o se
+ especificaron niveles de control compromiso *ALL, *CS o *CHG para un arch.
+ distribuido abierto para operaciones solo de entrada. 6 -- Programa abrió
+ miembro OMEVTL1 para operaciones solo de salida y se especificó
+ SEQONLY(*YES) con núm. de registros por omisión y se solicitó retorno de
+ clave duplicada o retorno de clave de inserción. Ha cambiado SEQONLY(*YES) a
+ SEQONLY(*NO) para permitir que se otorgue retorno de clave duplicada o
+ retorno de clave de inserción registro a registro. 7 - Programa abrió un
+ miembro de consulta que contiene al menos una subselección. La subselección
+ más externa otorgó una referencia correlacionada para una subconsulta o
+ procesó una subconsulta con un operador de predicado de subconsulta IN, =
+ ANY o <> ALL, que se trata como una referencia correlacionada. Desde estas
+ consultas solo puede recuperarse un registro cada vez. 8 - El archivo tiene
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 11
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ restricciones referenciales, desencadenantes o es un archivo distribuido. 9
+ - El arch. es un arch. distribuido abierto por DSTDTA(*CURRENT). Uno o más
+ nodos de este archivo se han implementado mediante proceso de unión de arch.
+ lógico. 10 -- El arch. o un arch. físico en el que está basado contiene
+ campos de enlace datos de control de enlace archivo. 11 - El archivo, o un
+ archivo físico en el que se basa el archivo, tiene una columna que es
+ ROW-BEGIN, ROW-END, TRANSACTION-START-ID o expresión generada. Recuperación
+ . .: Cond. 1 o cond. 6: -- Si no puede cambiar el parámetro SEQONLY(*YES)
+ a SEQONLY(*NO), utilice el mandato Alterar archivo de base de datos (OVRDBF)
+ para alterar temporalmente el parámetro SEQONLY(*NO). Repita la petición.
+CPC2206 Terminación 00 20/05/22 12:51:20,377476 QSYCHONR QSYS 0603 QLIINSRT QSYS 0553
+ Usuario origen . . . . . . : REMAIN
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Se ha modificado la propiedad del objeto OMX023 en QTEMP
+ del tipo *USRSPC.
+ Causa . . . . . : Se ha modificado la autoridad del objeto OMX023 del tipo
+ *USRSPC de la biblioteca QTEMP.
+OMQ5035 Escape 30 20/05/22 12:51:20,394381 OMQRTVSRCP OMS *STMT OMX0162C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMQRTVSRCP
+ Procedimiento origen . . . : OMQRTVSRCP
+ Sentencia . . . . . . . . . : 8600
+ Módulo destino . . . . . . : OMX0162C
+ Procedimiento destino . . . : OMX0162C
+ Sentencia . . . . . . . . . : 5400
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Keyword is blank or not registered.
+ Cause . . . . . : In order to retrieve the value of a keyword, the keyword
+ may not be blank and the keyword has to be registrated before it can be
+ retrieved. Recovery. . . . : Do not leave the keyword blank or register
+ the keyword and try the command again.
+OMQ5035 Escape 30 20/05/22 12:51:20,396951 OMQRTVSRCP OMS *STMT OMX0162C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : OMQRTVSRCP
+ Procedimiento origen . . . : OMQRTVSRCP
+ Sentencia . . . . . . . . . : 8600
+ Módulo destino . . . . . . : OMX0162C
+ Procedimiento destino . . . : OMX0162C
+ Sentencia . . . . . . . . . : 10700
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Keyword is blank or not registered.
+ Cause . . . . . : In order to retrieve the value of a keyword, the keyword
+ may not be blank and the keyword has to be registrated before it can be
+ retrieved. Recovery. . . . : Do not leave the keyword blank or register
+ the keyword and try the command again.
+CPFA981 Escape 40 20/05/22 12:51:20,397049 QP0ZDLTE QSYS *STMT OMX0162C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QP0ZDLTE
+ Procedimiento origen . . . : main
+ Sentencia . . . . . . . . . : 90
+ Módulo destino . . . . . . : OMX0162C
+ Procedimiento destino . . . : OMX0162C
+5770SS1 V7R3M0 160422 Mostrar registro trabajo REMAIN 20/05/22 12:51:30 CEST Página 12
+Nombre de trabajo . . . . . : QZRCSRVS Usuario . . . . . . : REMAIN Número . . . . . . . . . . . : 371678
+Descripción trabajo . . . . . : QZBSJOBD Biblioteca . . . : QSYS
+IDMSJ TIPO SEV FECHA HORA DE PGM BIBLIOTECA INST A PGM BIBLIOTECA INST
+ Sentencia . . . . . . . . . : 12300
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : La variable de entorno no existe.
+ Causa . . . . . : Ha intentado modificar (CHGENVVAR) o eliminar (RMVENVVAR)
+ una variable de entorno 'CLASSPATH', de nivel *JOB, que no existe.
+ Recuperación . .: Reintente el mandato con una variable de entorno que
+ exista. Puede utilizar el mandato Trabajar con variables de entorno
+ (WRKENVVAR) para ver qué variables de entorno se han definido para el
+ trabajo.
+CPCA980 Terminación 00 20/05/22 12:51:20,397156 QP0ZADDE QSYS *STMT OMX0162C OMS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QP0ZADDE
+ Procedimiento origen . . . : main
+ Sentencia . . . . . . . . . : 226
+ Módulo destino . . . . . . : OMX0162C
+ Procedimiento destino . . . : OMX0162C
+ Sentencia . . . . . . . . . : 12600
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : Variable de entorno añadida.
+ Causa . . . . . : Se ha añadido la variable de entorno 'CLASSPATH'.
+JVAB302 Diagnóstico 10 20/05/22 12:51:20,398575 QJVAUTLJVM QSYS *STMT QJVAJVMXIF QSYS *STMT
+ Usuario origen . . . . . . : REMAIN
+ Módulo origen . . . . . . . : QJVAUTLJVM
+ Procedimiento origen . . . : JvaSendMsg
+ Sentencia . . . . . . . . . : 10
+ Módulo destino . . . . . . : QJVAJVMXIF
+ Procedimiento destino . . . : sendMessage__10QjvaJvmXifFPcPviT1
+ Sentencia . . . . . . . . . : 1
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : La máquina virtual Java es IBM Technology para Java.
+ PID(7716)
+ Causa . . . . . : La variable de entorno JAVA_HOME es
+ /QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit
+CPF9815 Escape 40 20/05/22 12:51:22,746324 QWHRMBRD QSYS 0436 OMX942C OMS *STMT
+ Usuario origen . . . . . . : INFORSECO
+ Módulo destino . . . . . . : OMX942C
+ Procedimiento destino . . . : OMX942C
+ Sentencia . . . . . . . . . : 8300
+ Hebra . . . . . : 00000111
+ Mensaje . . . . : No se ha encontrado el miembro QSQLRPGE archivo QCPYSRC en
+ la biblioteca OMSMOD.
+ Causa . . . . . : El miembro QSQLRPGE en el archivo QCPYSRC de la biblioteca
+ OMSMOD no se ha encontrado. El miembro especificado en el mandato no se ha
+ encontrado. Si el nombre del miembro es *N, no hay ningún miembro en el
+ archivo. Si el nombre del miembro es *ALL, el archivo no es un archivo de
+ partición. Recuperación . .: Añada el miembro (mandato ADDLFM o mandato
+ ADDPFM) y vuelva a intentar la petición.
