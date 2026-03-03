@@ -81,6 +81,12 @@
         "icon": "$(search)"
       },
       {
+        "command": "joblogDetective.filterByContent",
+        "title": "%command.filterByContent.title%",
+        "category": "%command.filterByContent.category%",
+        "icon": "$(note)"
+      },
+      {
         "command": "joblogDetective.clearFilters",
         "title": "%command.clearFilters.title%",
         "category": "%command.clearFilters.category%",

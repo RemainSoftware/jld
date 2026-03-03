@@ -70,6 +70,10 @@ export interface LocalizedStrings {
     'filter.showCommandMessages': string;
     'filter.hideCommandMessages': string;
     'filter.commandHidden': string;
+    'filter.filterByContent': string;
+    'filter.enterContentPattern': string;
+    'filter.contentPatternPlaceholder': string;
+    'filter.content': string;
 
     // Status bar and messages
     'status.jobLog': string;
@@ -155,6 +159,10 @@ const defaultStrings: LocalizedStrings = {
     'filter.showCommandMessages': 'Show Command Messages',
     'filter.hideCommandMessages': 'Hide Command Messages',
     'filter.commandHidden': 'Command hidden',
+    'filter.filterByContent': 'Filter by Content...',
+    'filter.enterContentPattern': 'Enter content pattern (searches in message text, programs, procedures)',
+    'filter.contentPatternPlaceholder': 'MYPGM*, *error*, MYLIB/*',
+    'filter.content': 'Content',
 
     // Status bar and messages
     'status.jobLog': 'Job Log',

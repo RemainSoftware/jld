@@ -209,6 +209,22 @@ function registerCommands(
         })
     );
     
+    // Filter by content pattern command
+    context.subscriptions.push(
+        vscode.commands.registerCommand('joblogDetective.filterByContent', async () => {
+            const currentPattern = treeDataProvider.getContentPattern();
+            const pattern = await vscode.window.showInputBox({
+                prompt: t('filter.enterContentPattern'),
+                placeHolder: t('filter.contentPatternPlaceholder'),
+                value: currentPattern
+            });
+            
+            if (pattern !== undefined) {
+                treeDataProvider.setContentPattern(pattern);
+            }
+        })
+    );
+    
     // Clear all filters command
     context.subscriptions.push(
         vscode.commands.registerCommand('joblogDetective.clearFilters', () => {
@@ -225,6 +241,7 @@ function registerCommands(
             const options = [
                 { label: `$(filter) ${t('filter.filterByType')}`, command: 'joblogDetective.filterByType' },
                 { label: `$(search) ${t('filter.filterByMessageId')}`, command: 'joblogDetective.filterByMessageId' },
+                { label: `$(note) ${t('filter.filterByContent')}`, command: 'joblogDetective.filterByContent' },
                 { label: `$(warning) ${t('filter.showHighSeverity')}`, command: 'joblogDetective.showHighSeverity' },
                 { label: `$(terminal) ${commandLabel}`, command: 'joblogDetective.toggleCommandMessages' },
                 { label: `$(clear-all) ${t('filter.clearAllFilters')}`, command: 'joblogDetective.clearFilters' }

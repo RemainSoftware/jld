@@ -817,9 +817,10 @@ export function filterMessages(
         types?: Set<string>;
         messageIds?: Set<string>;
         messageIdPattern?: string;  // Pattern like "SQL*", "CPF*", etc.
+        contentPattern?: string;    // Pattern to search in message text, cause, recovery, and program names
     }
 ): JobLogMessage[] {
-    // Convert pattern to regex if provided
+    // Convert message ID pattern to regex if provided
     let messageIdRegex: RegExp | undefined;
     if (options.messageIdPattern) {
         // Convert glob-like pattern to regex: * -> .*, ? -> .
@@ -828,6 +829,17 @@ export function filterMessages(
             .replace(/\*/g, '.*')                    // * -> .*
             .replace(/\?/g, '.');                    // ? -> .
         messageIdRegex = new RegExp(`^${regexPattern}$`, 'i');
+    }
+    
+    // Convert content pattern to regex if provided
+    let contentRegex: RegExp | undefined;
+    if (options.contentPattern) {
+        // Convert glob-like pattern to regex: * -> .*, ? -> .
+        const regexPattern = options.contentPattern
+            .replace(/[.+^${}()|[\]\\]/g, '\\$&')  // Escape regex chars
+            .replace(/\*/g, '.*')                    // * -> .*
+            .replace(/\?/g, '.');                    // ? -> .
+        contentRegex = new RegExp(regexPattern, 'i');
     }
     
     return messages.filter(msg => {
@@ -846,6 +858,27 @@ export function filterMessages(
         // Apply message ID pattern filter
         if (messageIdRegex && !messageIdRegex.test(msg.messageId)) {
             return false;
+        }
+        // Apply content pattern filter - search in message text, cause, recovery, and program info
+        if (contentRegex) {
+            const searchFields = [
+                msg.messageText,
+                msg.cause,
+                msg.recovery,
+                msg.from.program,
+                msg.from.library,
+                msg.from.module,
+                msg.from.procedure,
+                msg.to.program,
+                msg.to.library,
+                msg.to.module,
+                msg.to.procedure
+            ].filter(Boolean);
+            
+            const matchFound = searchFields.some(field => contentRegex!.test(field!));
+            if (!matchFound) {
+                return false;
+            }
         }
         return true;
     });

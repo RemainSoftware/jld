@@ -16,6 +16,8 @@
   "command.showHighSeverity.category": "Job Log Detective",
   "command.filterByMessageId.title": "Filteren op bericht-ID",
   "command.filterByMessageId.category": "Job Log Detective",
+  "command.filterByContent.title": "Filteren op inhoud",
+  "command.filterByContent.category": "Job Log Detective",
   "command.clearFilters.title": "Alle filters wissen",
   "command.clearFilters.category": "Job Log Detective",
   "command.openFilterMenu.title": "Filtermenu openen",

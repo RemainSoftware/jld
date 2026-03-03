@@ -197,6 +197,7 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     private filterTypes: Set<string> = new Set();
     private showHighSeverityOnly: boolean = false;
     private messageIdPattern: string = '';
+    private contentPattern: string = '';
     
     constructor() {
         // Listen to configuration changes
@@ -312,11 +313,29 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
     }
     
     /**
+     * Set content filter pattern
+     * Searches in message text, cause, recovery, and program/procedure names
+     * Supports glob-like patterns: MYPGM*, *error*, etc.
+     */
+    public setContentPattern(pattern: string): void {
+        this.contentPattern = pattern;
+        this.refresh();
+    }
+    
+    /**
+     * Get current content pattern
+     */
+    public getContentPattern(): string {
+        return this.contentPattern;
+    }
+    
+    /**
      * Clear all filters
      */
     public clearAllFilters(): void {
         this.filterTypes.clear();
         this.messageIdPattern = '';
+        this.contentPattern = '';
         this.showHighSeverityOnly = false;
         this.minSeverity = 0;
         this.refresh();
@@ -341,6 +360,9 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
         }
         if (this.messageIdPattern) {
             filters.push(`${t('filter.id')}: ${this.messageIdPattern}`);
+        }
+        if (this.contentPattern) {
+            filters.push(`${t('filter.content')}: ${this.contentPattern}`);
         }
         if (this.showHighSeverityOnly) {
             filters.push(t('filter.highSeverityOnly'));
@@ -419,7 +441,8 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
             hideCommand: this.hideCommand,
             minSeverity: this.showHighSeverityOnly ? highSeverityThreshold : this.minSeverity,
             types: this.filterTypes.size > 0 ? this.filterTypes : undefined,
-            messageIdPattern: this.messageIdPattern || undefined
+            messageIdPattern: this.messageIdPattern || undefined,
+            contentPattern: this.contentPattern || undefined
         });
         
         // Add summary item

@@ -32,6 +32,10 @@
   "filter.showCommandMessages": "Opdrachtberichten tonen",
   "filter.hideCommandMessages": "Opdrachtberichten verbergen",
   "filter.commandHidden": "Opdrachten verborgen",
+  "filter.filterByContent": "Filteren op inhoud...",
+  "filter.enterContentPattern": "Voer zoekpatroon in (zoekt in berichttekst, programma's, procedures)",
+  "filter.contentPatternPlaceholder": "MIJNPGM*, *fout*, MIJNBIB/*",
+  "filter.content": "Inhoud",
 
   "status.jobLog": "Taakprotocol",
   "status.messagesCount": "{0} berichten",

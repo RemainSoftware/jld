@@ -31,8 +31,10 @@
   "filter.minSeverity": "Min SEV",
   "filter.showCommandMessages": "Befehlsnachrichten anzeigen",
   "filter.hideCommandMessages": "Befehlsnachrichten ausblenden",
-  "filter.commandHidden": "Befehle ausgeblendet",
-
+  "filter.commandHidden": "Befehle ausgeblendet",  "filter.filterByContent": "Nach Inhalt filtern...",
+  "filter.enterContentPattern": "Suchmuster eingeben (sucht in Nachrichtentext, Programmen, Prozeduren)",
+  "filter.contentPatternPlaceholder": "MEINPGM*, *fehler*, MEINBIB/*",
+  "filter.content": "Inhalt",
   "status.jobLog": "Job-Log",
   "status.messagesCount": "{0} Nachrichten",
   "status.highSeverity": "{0} hoher Schweregrad",
