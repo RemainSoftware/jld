@@ -40,6 +40,8 @@ let ENGLISH_JOBLOG_SMALL: string;
 let GERMAN_JOBLOG: string;
 let DUTCH_JOBLOG: string;
 let SPANISH_JOBLOG: string;
+let FRENCH_JOBLOG: string;
+let ITALIAN_JOBLOG: string;
 let FAILED_JOBLOG: string;
 let PAGE_SPLIT_JOBLOG: string;
 
@@ -55,6 +57,8 @@ beforeAll(() => {
     GERMAN_JOBLOG = loadFixture('joblog_german.txt');
     DUTCH_JOBLOG = loadFixture('joblog_dutch.txt');
     SPANISH_JOBLOG = loadFixture('joblog_spanish.txt');
+    FRENCH_JOBLOG = loadFixture('joblog_french.txt');
+    ITALIAN_JOBLOG = loadFixture('joblog_italian.txt');
     FAILED_JOBLOG = loadFixture('joblog_failed.txt');
     PAGE_SPLIT_JOBLOG = loadFixture('joblog_page_split.txt');
 });
@@ -80,6 +84,18 @@ describe('detectJobLog', () => {
 
     it('should detect Spanish job log with high confidence', () => {
         const result = detectJobLog(SPANISH_JOBLOG);
+        expect(result.isJobLog).toBe(true);
+        expect(result.confidence).toBe('high');
+    });
+
+    it('should detect French job log with high confidence', () => {
+        const result = detectJobLog(FRENCH_JOBLOG);
+        expect(result.isJobLog).toBe(true);
+        expect(result.confidence).toBe('high');
+    });
+
+    it('should detect Italian job log with high confidence', () => {
+        const result = detectJobLog(ITALIAN_JOBLOG);
         expect(result.isJobLog).toBe(true);
         expect(result.confidence).toBe('high');
     });
@@ -247,6 +263,104 @@ describe('parseJobLog', () => {
             // Spanish "Informativo" should be normalized to "Information"
             const infoMsg = result.messages.find(m => m.type === 'Information');
             expect(infoMsg).toBeDefined();
+        });
+    });
+
+    describe('French job log (full file)', () => {
+        it('should parse header correctly', () => {
+            const result = parseJobLog(FRENCH_JOBLOG);
+            expect(result.isValid).toBe(true);
+            expect(result.header).toBeDefined();
+            expect(result.header?.productId).toBe('5770SS1');
+            expect(result.header?.version).toBe('V7R5M0');
+            expect(result.header?.jobName).toBe('FRAA0');
+            expect(result.header?.user).toBe('DEV1FRA');
+            expect(result.header?.jobNumber).toBe('430797');
+        });
+
+        it('should parse French messages', () => {
+            const result = parseJobLog(FRENCH_JOBLOG);
+            expect(result.messages.length).toBeGreaterThan(0);
+        });
+
+        it('should normalize French message types to English', () => {
+            const result = parseJobLog(FRENCH_JOBLOG);
+            expect(result.messages.length).toBeGreaterThan(0);
+            
+            // French "Information" should be normalized to "Information"
+            const infoMsg = result.messages.find(m => m.type === 'Information');
+            expect(infoMsg).toBeDefined();
+            
+            // French "Echappement" should be normalized to "Escape"
+            const escapeMsg = result.messages.find(m => m.type === 'Escape');
+            expect(escapeMsg).toBeDefined();
+        });
+
+        it('should parse French date format (DD/MM/YY)', () => {
+            const result = parseJobLog(FRENCH_JOBLOG);
+            const msg = result.messages[0];
+            expect(msg?.date).toMatch(/\d{2}\/\d{2}\/\d{2}/);
+        });
+
+        it('should parse French detail fields', () => {
+            const result = parseJobLog(FRENCH_JOBLOG);
+            
+            // Find a message with "Module de destination" parsed
+            const msgWithModule = result.messages.find(m => m.to.module);
+            expect(msgWithModule).toBeDefined();
+            
+            // Find a message with "Instruction" parsed (can be in from or to)
+            const msgWithStatement = result.messages.find(m => m.from.statement || m.to.statement);
+            expect(msgWithStatement).toBeDefined();
+        });
+    });
+
+    describe('Italian job log (full file)', () => {
+        it('should parse header correctly', () => {
+            const result = parseJobLog(ITALIAN_JOBLOG);
+            expect(result.isValid).toBe(true);
+            expect(result.header).toBeDefined();
+            expect(result.header?.productId).toBe('5770SS1');
+            expect(result.header?.version).toBe('V7R5M0');
+            expect(result.header?.jobName).toBe('ITAB0');
+            expect(result.header?.user).toBe('DEV1ITA');
+            expect(result.header?.jobNumber).toBe('430806');
+        });
+
+        it('should parse Italian messages', () => {
+            const result = parseJobLog(ITALIAN_JOBLOG);
+            expect(result.messages.length).toBeGreaterThan(0);
+        });
+
+        it('should normalize Italian message types to English', () => {
+            const result = parseJobLog(ITALIAN_JOBLOG);
+            expect(result.messages.length).toBeGreaterThan(0);
+            
+            // Italian "Informazioni" should be normalized to "Information"
+            const infoMsg = result.messages.find(m => m.type === 'Information');
+            expect(infoMsg).toBeDefined();
+            
+            // Italian "Completamento" should be normalized to "Completion"
+            const completionMsg = result.messages.find(m => m.type === 'Completion');
+            expect(completionMsg).toBeDefined();
+        });
+
+        it('should parse Italian date format (DD/MM/YY)', () => {
+            const result = parseJobLog(ITALIAN_JOBLOG);
+            const msg = result.messages[0];
+            expect(msg?.date).toMatch(/\d{2}\/\d{2}\/\d{2}/);
+        });
+
+        it('should parse Italian detail fields', () => {
+            const result = parseJobLog(ITALIAN_JOBLOG);
+            
+            // Find a message with "Al modulo" parsed
+            const msgWithModule = result.messages.find(m => m.to.module);
+            expect(msgWithModule).toBeDefined();
+            
+            // Find a message with "Istruzione" parsed (can be in from or to)
+            const msgWithStatement = result.messages.find(m => m.from.statement || m.to.statement);
+            expect(msgWithStatement).toBeDefined();
         });
     });
 
@@ -506,6 +620,24 @@ describe('Performance', () => {
     it('should parse large Dutch file efficiently', () => {
         const start = Date.now();
         const result = parseJobLog(DUTCH_JOBLOG);
+        const elapsed = Date.now() - start;
+
+        expect(result.isValid).toBe(true);
+        expect(elapsed).toBeLessThan(2000);
+    });
+
+    it('should parse French file efficiently', () => {
+        const start = Date.now();
+        const result = parseJobLog(FRENCH_JOBLOG);
+        const elapsed = Date.now() - start;
+
+        expect(result.isValid).toBe(true);
+        expect(elapsed).toBeLessThan(2000);
+    });
+
+    it('should parse Italian file efficiently', () => {
+        const start = Date.now();
+        const result = parseJobLog(ITALIAN_JOBLOG);
         const elapsed = Date.now() - start;
 
         expect(result.isValid).toBe(true);

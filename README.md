@@ -24,7 +24,8 @@ The extension automatically detects and parses job logs in:
 | English | Job Log | Command, Completion, Diagnostic, Escape, Information, etc. |
 | German | Jobprotokoll | Befehl, Beendigung, Diagnose, Abbruch, Information, etc. |
 | Dutch | Taaklogboek | Opdracht, Voltooiing, Diagnose, Afbreken, Informatie, etc. |
-| French | Historique des travaux | Commande, Achèvement, Diagnostic, Echappement, Information, etc. |
+| French | Historique du travail | Commande, Achèvement, Diagnostic, Echappement, Information, etc. |
+| Italian | Visual. registrazione lavoro | Comando, Completamento, Diagnosi, Uscita, Informazioni, etc. |
 | Spanish | Mostrar registro trabajo | Mandato, Terminación, Diagnóstico, Escape, Informativo, etc. |
 
 ## Message Types
@@ -109,7 +110,19 @@ The extension detects job logs by:
 3. Content containing:
    - IBM i product ID (`5770SS1` or similar)
    - Version pattern (`V7R6M0` format)
-   - "Job Log" header text
+   - "Job Log" header text (in any supported language)
+
+## Notifications
+
+When a job log is opened, the extension shows notifications based on the analysis results:
+
+| Condition | Notification |
+|-----------|--------------|
+| Clean job log (no errors) | Status bar message only (message count, parse time) |
+| Job log with Escape or Diagnostic messages | Warning popup with error/diagnostic counts |
+| Job ended abnormally (CPF1164 with non-zero end code) | Warning popup indicating abnormal termination |
+
+**Note:** Job logs containing only Information, Command, Completion, or Request messages are considered "clean" and do not trigger a warning popup. The Job Log Detective panel still displays all parsed messages for analysis.
 
 ## Development
 

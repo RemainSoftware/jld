@@ -1,0 +1,98 @@
+5770SS1 V7R5M0 220415 Visual. registrazione lavoro PANDP 03/03/26 20:29:24 CET Pag. 1
+Nome lavoro . . . . . . . . : ITAB0 Utente . . . . . . : DEV1ITA Numero . . . . . . . . . . . : 430806
+Descrizione lavoro . . . . . : DEV Libreria . . . . : JPL
+IDMSG TIPO GRAV DATA ORA DA PGM LIBRERIA INST A PGM LIBRERIA INST
+CPF1124 Informazioni 00 03/03/26 20:29:11.265641 QWTPIIPP QSYS 04DC *EXT *N
+Messaggio . . . : Job 430806/DEV1ITA/ITAB0 started on 03/03/26 at 20:29:11
+in subsystem QINTER in QSYS. Job entered system on 03/03/26 at 20:29:11.
+ITAB0 DEV1ITA 430806 20:29:11 26/03/03 20:29:11 26/03/03 QINTER QSYS INLPGM
+DEV MAIN QSYS *CRTDFT 03/03/26 20:29:11 03/03/26 20:29:11
+*NONE Comando 03/03/26 20:29:11.325838 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 7100
+Messaggio . . . : 7100 - RTVJOBA JOB(&JOBNAME)
+*NONE Comando 03/03/26 20:29:11.326004 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 7800
+Messaggio . . . : 7800 - RTVJOBA USER(&USRPRF) TYPE(&TYPE)
+*NONE Comando 03/03/26 20:29:11.326177 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 8100
+Messaggio . . . : 8100 - RTVOBJD OBJ(DSPBRKMSG) OBJTYPE(*PGM)
+RTNLIB(&PGMLIB)
+*NONE Comando 03/03/26 20:29:11.326366 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 8200
+Messaggio . . . : 8200 - CHGMSGQ MSGQ(*USRPRF) PGM(DEV/DSPBRKMSG)
+*NONE Comando 03/03/26 20:29:11.326481 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 8400
+Messaggio . . . : 8400 - CHGMSGQ MSGQ(*WRKSTN) PGM(DEV/DSPBRKMSG)
+*NONE Comando 03/03/26 20:29:11.327696 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 9000
+Messaggio . . . : 9000 - RTVJOBA JOB(&RTVDEV)
+*NONE Comando 03/03/26 20:29:11.327828 QCLCLCPR QSYS 0508 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 9200
+Messaggio . . . : 9200 - CALL PGM(QDCRDEVD) /* The CALL command
+contains parameters */
+*NONE Comando 03/03/26 20:29:11.328273 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 11100
+Messaggio . . . : 11100 - CHGJOB CCSID(01144)
+*NONE Comando 03/03/26 20:29:11.328543 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 13100
+Messaggio . . . : 13100 - RTVUSRPRF LANGID(&LANGID)
+5770SS1 V7R5M0 220415 Visual. registrazione lavoro PANDP 03/03/26 20:29:24 CET Pag. 2
+Nome lavoro . . . . . . . . : ITAB0 Utente . . . . . . : DEV1ITA Numero . . . . . . . . . . . : 430806
+Descrizione lavoro . . . . . : DEV Libreria . . . . : JPL
+IDMSG TIPO GRAV DATA ORA DA PGM LIBRERIA INST A PGM LIBRERIA INST
+*NONE Comando 03/03/26 20:29:11.328703 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 34000
+Messaggio . . . : 34000 - CHGSYSLIBL LIB(QSYS2932)
+CPC2196 Completamento 00 03/03/26 20:29:11.333057 QLICHLBL QSYS 0149 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 34000
+Messaggio . . . : La libreria QSYS2932 è stata aggiunta all'elenco librerie.
+Causa . . : Se è stato usato il comando ADDLIBLE, QSYS2932 è stata aggiunta
+all'elenco librerie dell'utente. Se è stato usato il comando CHGSYSLIBL,
+QSYS2932 è stata aggiunta alla parte di sistema dell'elenco librerie.
+*NONE Comando 03/03/26 20:29:11.333124 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 49000
+Messaggio . . . : 49000 - RTVMSG MSGID(CPX8416) MSGF(QCPFMSG) SECLVL(&STR)
+*NONE Comando 03/03/26 20:29:11.342016 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 49700
+Messaggio . . . : 49700 - CHGJOB DATFMT(*DMY) DATSEP('/') TIMSEP(':')
+LANGID('ITA') CNTRYID('IT')
+*NONE Comando 03/03/26 20:29:11.346611 QCADRV QSYS 0421 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 50600
+Messaggio . . . : 50600 - CHGJOB CHRIDCTL(*JOBCCSID)
+*NONE Comando 03/03/26 20:29:11.347221 QCLRTNE QSYS 0058 INLPGM DEV *STMT
+Al modulo . . . . . . . . . : INLPGM
+Alla procedura . . . . . . : INLPGM
+Istruzione. . . . . . . . . : 52100
+Messaggio . . . : 50700 - RETURN
+*NONE Richiesta 03/03/26 20:29:11.348056 QUIMNDRV QSYS 02B5 QUIMNDRV QSYS 02B5
+Messaggio . . . : -/* */
+*NONE Richiesta 03/03/26 20:29:18.480730 QPTCHECK *N QUICMD QSYS 0543
+Messaggio . . . : -DSPJOBLOG OUTPUT(*PRINT)

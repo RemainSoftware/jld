@@ -23,7 +23,7 @@
  */
 
 // Localization support for Job Log Detective
-// Supports multiple languages: English, German, Dutch, Spanish, and French
+// Supports multiple languages: English, German, Dutch, French, Italian, and Spanish
 
 /**
  * Language definition for job log parsing
@@ -155,24 +155,24 @@ export const GERMAN: LanguageDefinition = {
 };
 
 /**
- * French language definition (placeholder - expand as needed)
+ * French language definition
  */
 export const FRENCH: LanguageDefinition = {
     code: 'fr',
     name: 'French',
 
-    jobLogTitle: ['Historique des travaux', 'Journal des travaux'],
+    jobLogTitle: ['Historique du travail', 'Historique des travaux', 'Journal des travaux'],
     pageLabel: ['Page'],
 
     jobNameLabel: ['Nom du travail'],
     userLabel: ['Utilisateur'],
     numberLabel: ['Numéro'],
-    jobDescLabel: ['Description du travail'],
+    jobDescLabel: ['Description de travail', 'Description du travail'],
     libraryLabel: ['Bibliothèque'],
 
-    msgIdHeader: ['ID MSG', 'IDMSG'],
+    msgIdHeader: ['IDMSG', 'ID MSG'],
     typeHeader: ['TYPE'],
-    sevHeader: ['GRA'],  // Gravité
+    sevHeader: ['GRV', 'GRA'],  // Gravité
 
     messageTypes: new Map([
         ['Commande', 'Command'],
@@ -194,9 +194,54 @@ export const FRENCH: LanguageDefinition = {
     statement: ['Instruction'],
     messageLabel: ['Message'],
     causeLabel: ['Cause'],
-    recoveryLabel: ['Reprise', 'Correction'],
+    recoveryLabel: ['Que faire', 'Reprise', 'Correction'],
     threadLabel: ['Unité d\'exécution'],
     fromUser: ['Utilisateur source'],
+};
+
+/**
+ * Italian language definition
+ */
+export const ITALIAN: LanguageDefinition = {
+    code: 'it',
+    name: 'Italian',
+
+    jobLogTitle: ['Visual. registrazione lavoro', 'Visualizzazione registrazione lavoro', 'Registro lavoro'],
+    pageLabel: ['Pag.', 'Pagina'],
+
+    jobNameLabel: ['Nome lavoro'],
+    userLabel: ['Utente'],
+    numberLabel: ['Numero'],
+    jobDescLabel: ['Descrizione lavoro'],
+    libraryLabel: ['Libreria'],
+
+    msgIdHeader: ['IDMSG'],
+    typeHeader: ['TIPO'],
+    sevHeader: ['GRAV'],  // Gravità
+
+    messageTypes: new Map([
+        ['Comando', 'Command'],
+        ['Completamento', 'Completion'],
+        ['Diagnosi', 'Diagnostic'],
+        ['Uscita', 'Escape'],
+        ['Informazioni', 'Information'],
+        ['Interrogazione', 'Inquiry'],
+        ['Notifica', 'Notify'],
+        ['Risposta', 'Reply'],
+        ['Richiesta', 'Request'],
+        ['Copia mittente', 'Sender Copy'],
+    ]),
+
+    fromModule: ['Dal modulo', 'Da modulo'],
+    fromProcedure: ['Dalla procedura', 'Da procedura'],
+    toModule: ['Al modulo', 'A modulo'],
+    toProcedure: ['Alla procedura', 'A procedura'],
+    statement: ['Istruzione'],
+    messageLabel: ['Messaggio'],
+    causeLabel: ['Causa'],
+    recoveryLabel: ['Ripristino', 'Correzione'],
+    threadLabel: ['Thread'],
+    fromUser: ['Dall\'utente', 'Da utente'],
 };
 
 /**
@@ -298,6 +343,7 @@ export const LANGUAGES: LanguageDefinition[] = [
     GERMAN,
     DUTCH,
     FRENCH,
+    ITALIAN,
     SPANISH,
 ];
 
