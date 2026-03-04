@@ -13,7 +13,7 @@ A VS Code extension for analyzing IBM i job logs. Quickly find errors and issues
 - **Quick Navigation**: Click on any message to jump to its location in the file
 - **Rich Tooltips**: Hover over messages to see full details including cause and recovery
 - **Automatic Detection**: Automatically detects IBM i job log files by content or filename pattern
-- **Multi-Language Support**: Parses job logs in English, German, Dutch, French, and Spanish
+- **Multi-Language Support**: Parses job logs in English, German, Dutch, French, Italian, and Spanish
 
 ## Supported Languages
 
