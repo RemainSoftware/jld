@@ -143,7 +143,7 @@ export interface FilterOptions {
  * Tree item data for the TreeDataProvider
  */
 export interface TreeItemData {
-    type: 'root' | 'category' | 'messageGroup' | 'message' | 'page';
+    type: 'root' | 'category' | 'messageGroup' | 'message' | 'page' | 'timeline' | 'timeBucket';
     label: string;
     description?: string;
     message?: JobLogMessage;

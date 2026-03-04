@@ -162,7 +162,25 @@ export class JobLogTreeItem extends vscode.TreeItem {
         }
         
         if (this.data.type === 'page') {
+            // Check if this page has high severity messages (for timeline pagination)
+            const highSevCount = this.data.count || 0;
+            if (highSevCount > 0) {
+                return new vscode.ThemeIcon('flame', new vscode.ThemeColor('editorWarning.foreground'));
+            }
             return new vscode.ThemeIcon('list-flat');
+        }
+        
+        if (this.data.type === 'timeline') {
+            return new vscode.ThemeIcon('history');
+        }
+        
+        if (this.data.type === 'timeBucket') {
+            // Icon reflects high severity count in this bucket
+            const highSevCount = this.data.count || 0;
+            if (highSevCount > 0) {
+                return new vscode.ThemeIcon('flame', new vscode.ThemeColor('editorWarning.foreground'));
+            }
+            return new vscode.ThemeIcon('clock');
         }
         
         if (this.data.type === 'message' && this.message) {
@@ -468,6 +486,19 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
             items.push(new JobLogTreeItem(highPriorityData, vscode.TreeItemCollapsibleState.Expanded));
         }
         
+        // Add timeline section - all filtered messages in chronological order
+        if (messages.length > 0) {
+            const timelineChildren = this.createTimelineChildren(messages);
+            const timelineData: TreeItemData = {
+                type: 'timeline',
+                label: t('tree.timeline', messages.length),
+                description: t('tree.timelineDesc'),
+                icon: 'history',
+                children: timelineChildren
+            };
+            items.push(new JobLogTreeItem(timelineData, vscode.TreeItemCollapsibleState.Collapsed));
+        }
+        
         // Group by type
         const typeGroups = groupMessages(messages, m => m.type);
         
@@ -569,6 +600,156 @@ export class JobLogTreeDataProvider implements vscode.TreeDataProvider<JobLogTre
                 pageStart: 0,  // Within this page's messages array
                 pageSize: PAGE_SIZE,
                 icon: 'list-flat'
+            });
+        }
+        
+        return pages;
+    }
+    
+    /**
+     * Create timeline children with time-bucketed grouping
+     * Automatically adjusts bucket size based on job duration
+     */
+    private createTimelineChildren(messages: JobLogMessage[]): TreeItemData[] {
+        if (messages.length === 0) {
+            return [];
+        }
+        
+        // Sort by timestamp
+        const sortedMessages = [...messages].sort((a, b) => 
+            a.timestamp.getTime() - b.timestamp.getTime()
+        );
+        
+        // Calculate duration to determine bucket size
+        const firstTime = sortedMessages[0].timestamp.getTime();
+        const lastTime = sortedMessages[sortedMessages.length - 1].timestamp.getTime();
+        const durationMs = lastTime - firstTime;
+        const durationMinutes = durationMs / 60000;
+        
+        // Determine bucket size based on duration
+        let bucketSizeMs: number;
+        let bucketLabel: string;
+        
+        if (durationMinutes < 1) {
+            // Less than 1 minute: bucket by seconds
+            bucketSizeMs = 1000;
+            bucketLabel = 'second';
+        } else if (durationMinutes < 10) {
+            // 1-10 minutes: bucket by 10 seconds
+            bucketSizeMs = 10000;
+            bucketLabel = '10sec';
+        } else if (durationMinutes < 60) {
+            // 10-60 minutes: bucket by 30 seconds
+            bucketSizeMs = 30000;
+            bucketLabel = '30sec';
+        } else {
+            // Over 1 hour: bucket by minute
+            bucketSizeMs = 60000;
+            bucketLabel = 'minute';
+        }
+        
+        // Group messages into buckets
+        const buckets = new Map<number, JobLogMessage[]>();
+        
+        for (const msg of sortedMessages) {
+            const bucketStart = Math.floor(msg.timestamp.getTime() / bucketSizeMs) * bucketSizeMs;
+            if (!buckets.has(bucketStart)) {
+                buckets.set(bucketStart, []);
+            }
+            buckets.get(bucketStart)!.push(msg);
+        }
+        
+        // Convert buckets to tree items
+        const bucketEntries = Array.from(buckets.entries()).sort((a, b) => a[0] - b[0]);
+        const children: TreeItemData[] = [];
+        const config = vscode.workspace.getConfiguration('joblogDetective');
+        const highSeverityThreshold = config.get<number>('highSeverityThreshold', 30);
+        
+        for (const [bucketTime, bucketMessages] of bucketEntries) {
+            const date = new Date(bucketTime);
+            const timeStr = date.toTimeString().split(' ')[0]; // HH:MM:SS
+            const count = bucketMessages.length;
+            
+            // Count high severity messages in this bucket
+            const highSeverityCount = bucketMessages.filter(m => m.severity >= highSeverityThreshold).length;
+            
+            // Get max severity in this bucket
+            const maxSeverity = Math.max(...bucketMessages.map(m => m.severity));
+            
+            // Build label with flame decoration (proportional to % of high severity)
+            const flames = this.getFlameDecoration(highSeverityCount, count);
+            const label = flames 
+                ? `${t('tree.timeBucket', timeStr, count)} ${flames}`
+                : t('tree.timeBucket', timeStr, count);
+            
+            // Create children - paginate if more than 100 messages
+            let bucketChildren: TreeItemData[];
+            if (count <= PAGE_SIZE) {
+                bucketChildren = bucketMessages.map(msg => this.createMessageData(msg));
+            } else {
+                // Paginate large buckets
+                bucketChildren = this.createPaginatedTimelineChildren(bucketMessages, highSeverityThreshold);
+            }
+            
+            const bucketData: TreeItemData = {
+                type: 'timeBucket',
+                label: label,
+                description: maxSeverity > 0 ? `SEV ${maxSeverity}` : undefined,
+                count: highSeverityCount, // Store high severity count for icon selection
+                severity: maxSeverity,
+                children: bucketChildren
+            };
+            children.push(bucketData);
+        }
+        
+        return children;
+    }
+    
+    /**
+     * Get flame decoration string based on percentage of high severity messages
+     * 1-20% = 🔥, 21-40% = 🔥🔥, 41-60% = 🔥🔥🔥, 61-80% = 🔥🔥🔥🔥, 81-100% = 🔥🔥🔥🔥🔥
+     */
+    private getFlameDecoration(highSeverityCount: number, totalCount: number): string {
+        if (highSeverityCount <= 0 || totalCount <= 0) {
+            return '';
+        }
+        const percentage = (highSeverityCount / totalCount) * 100;
+        const flameCount = Math.ceil(percentage / 20); // 1-20%=1, 21-40%=2, etc.
+        return '🔥'.repeat(Math.min(flameCount, 5));
+    }
+    
+    /**
+     * Create paginated children for large time buckets with flame decoration on sub-groups
+     */
+    private createPaginatedTimelineChildren(messages: JobLogMessage[], highSeverityThreshold: number): TreeItemData[] {
+        const pages: TreeItemData[] = [];
+        const totalPages = Math.ceil(messages.length / PAGE_SIZE);
+        
+        for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+            const start = pageIndex * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, messages.length);
+            const pageMessages = messages.slice(start, end);
+            
+            // Calculate high severity count for this page
+            const pageHighSevCount = pageMessages.filter(m => m.severity >= highSeverityThreshold).length;
+            const pageMaxSeverity = Math.max(...pageMessages.map(m => m.severity));
+            
+            // Build label with flame decoration for this sub-group
+            const flames = this.getFlameDecoration(pageHighSevCount, pageMessages.length);
+            const label = flames
+                ? `${t('tree.messages', start + 1, end)} ${flames}`
+                : t('tree.messages', start + 1, end);
+            
+            pages.push({
+                type: 'page',
+                label: label,
+                description: pageMaxSeverity > 0 ? `SEV ${pageMaxSeverity}` : `${pageMessages.length} items`,
+                messages: pageMessages,
+                pageStart: 0,
+                pageSize: PAGE_SIZE,
+                count: pageHighSevCount, // Store for icon selection
+                severity: pageMaxSeverity,
+                icon: pageHighSevCount > 0 ? 'flame' : 'list-flat'
             });
         }
         

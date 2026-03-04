@@ -60,6 +60,10 @@
   "tree.line": "Regel {0}",
   "tree.messages": "Berichten {0}-{1}",
   "tree.showMore": "Meer tonen...",
+  "tree.timeline": "Tijdlijn ({0})",
+  "tree.timelineDesc": "Berichten in tijdsvolgorde",
+  "tree.timeBucket": "{0} ({1})",
+  "tree.timeBucketHotspot": "{0} ({1}) 🔥",
 
   "tooltip.severity": "Ernst",
   "tooltip.time": "Tijd",

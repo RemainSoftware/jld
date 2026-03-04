@@ -6,13 +6,14 @@ A VS Code extension for analyzing IBM i job logs. Quickly find errors and issues
 
 ![Analysis View](images/analysis-view.png)
 
-- **Custom Tree View**: Dedicated "Job Log Detective" panel with filtering and navigation (1)
-- **Smart Analysis**: Highlights high-severity messages and analyses the log for errors (1)
-- **Outline View Integration**: View messages grouped by type and message ID in the VS Code Outline (2)
-- **Quick Navigation**: Click on any message to jump to its location in the file (3)
-- **Rich Tooltips**: Hover over messages to see full details including cause and recovery (4)
-- **Automatic Detection**: Automatically detects IBM i job log files by content or filename pattern (5)
-- **Multi-Language Support**: Parses job logs in English, German, French, and Spanish
+- **Custom Tree View**: Dedicated "Job Log Detective" panel with filtering and navigation
+- **Smart Analysis**: Highlights high-severity messages and analyzes the log for errors
+- **Timeline View**: Chronological view with time buckets to identify when issues occurred
+- **Outline View Integration**: View messages grouped by type and message ID in the VS Code Outline
+- **Quick Navigation**: Click on any message to jump to its location in the file
+- **Rich Tooltips**: Hover over messages to see full details including cause and recovery
+- **Automatic Detection**: Automatically detects IBM i job log files by content or filename pattern
+- **Multi-Language Support**: Parses job logs in English, German, Dutch, French, and Spanish
 
 ## Supported Languages
 
@@ -39,6 +40,36 @@ The extension recognizes all IBM i message types:
 - **Reply** - Responses to inquiries
 - **Notify** - Notification messages
 - **Sender Copy** - Copies of sent messages
+
+## Tree View Sections
+
+The Job Log Detective panel organizes messages into these sections:
+
+### Summary
+Shows job completion status, total message count, and high severity statistics.
+
+### High Priority
+Recent high-severity messages (Escape and Diagnostic) that likely indicate the root cause of issues.
+
+### Timeline
+All filtered messages grouped by time buckets. Helps identify **when** issues occurred.
+
+| Job Duration | Bucket Size |
+|--------------|-------------|
+| < 1 minute | 1 second |
+| 1-10 minutes | 10 seconds |
+| 10-60 minutes | 30 seconds |
+| > 60 minutes | 1 minute |
+
+Buckets show 🔥 icons based on the percentage of high-severity messages:
+- 1-20% = 🔥
+- 21-40% = 🔥🔥
+- 41-60% = 🔥🔥🔥
+- 61-80% = 🔥🔥🔥🔥
+- 81-100% = 🔥🔥🔥🔥🔥
+
+### Message Types
+Messages grouped by type (Escape, Diagnostic, Information, etc.), then by message ID.
 
 ## Usage
 

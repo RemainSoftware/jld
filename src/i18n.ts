@@ -112,6 +112,12 @@ export interface LocalizedStrings {
     'tree.messages': string;
     'tree.showMore': string;
 
+    // Timeline
+    'tree.timeline': string;
+    'tree.timelineDesc': string;
+    'tree.timeBucket': string;
+    'tree.timeBucketHotspot': string;
+
     // Document symbols
     'symbol.job': string;
     'symbol.summary': string;
@@ -200,6 +206,12 @@ const defaultStrings: LocalizedStrings = {
     // Pagination
     'tree.messages': 'Messages {0}-{1}',
     'tree.showMore': 'Show more...',
+
+    // Timeline
+    'tree.timeline': 'Timeline ({0})',
+    'tree.timelineDesc': 'Messages in chronological order',
+    'tree.timeBucket': '{0} ({1})',
+    'tree.timeBucketHotspot': '{0} ({1}) \uD83D\uDD25',
 
     // Document symbols
     'symbol.job': 'Job: {0}',

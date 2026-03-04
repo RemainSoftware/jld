@@ -58,6 +58,10 @@
   "tree.line": "Zeile {0}",
   "tree.messages": "Nachrichten {0}-{1}",
   "tree.showMore": "Mehr anzeigen...",
+  "tree.timeline": "Zeitleiste ({0})",
+  "tree.timelineDesc": "Nachrichten in zeitlicher Reihenfolge",
+  "tree.timeBucket": "{0} ({1})",
+  "tree.timeBucketHotspot": "{0} ({1}) 🔥",
 
   "tooltip.severity": "Schweregrad",
   "tooltip.time": "Zeit",
