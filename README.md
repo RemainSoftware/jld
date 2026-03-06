@@ -2,6 +2,10 @@
 
 A VS Code extension for analyzing IBM i job logs. Quickly find errors and issues in large job log files.
 
+## What's New
+
+See the [GitHub Releases](https://github.com/RemainSoftware/jld/releases) page for the latest updates and release notes.
+
 ## Features
 
 ![Analysis View](images/analysis-view.png)
