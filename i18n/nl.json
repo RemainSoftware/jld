@@ -76,6 +76,9 @@
   "symbol.job": "Taak: {0}",
   "symbol.summary": "Samenvatting",
   "symbol.messages": "{0} berichten",
+  "symbol.timeline": "Tijdlijn ({0})",
+  "symbol.timelineDesc": "Berichten in tijdsvolgorde",
+  "symbol.timeBucket": "{0} ({1})",
 
   "decorations.enabled": "Editor-decoraties ingeschakeld",
   "decorations.disabled": "Editor-decoraties uitgeschakeld"

@@ -74,6 +74,9 @@
   "symbol.job": "Job: {0}",
   "symbol.summary": "Zusammenfassung",
   "symbol.messages": "{0} Nachrichten",
+  "symbol.timeline": "Zeitleiste ({0})",
+  "symbol.timelineDesc": "Nachrichten in zeitlicher Reihenfolge",
+  "symbol.timeBucket": "{0} ({1})",
 
   "decorations.enabled": "Editor-Dekorationen aktiviert",
   "decorations.disabled": "Editor-Dekorationen deaktiviert"
