@@ -1,4 +1,10 @@
-MIT License
+DUAL LICENSE
+
+This software is available under two licensing options:
+
+================================================================================
+OPTION 1: MIT License (Open Source)
+================================================================================
 
 Copyright (c) 2026 Remain BV
 
@@ -19,3 +25,31 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+OPTION 2: Commercial License
+================================================================================
+
+For organizations that wish to embed the Job Log Detective parser or components
+into proprietary software products without the attribution requirements of the
+MIT license, a commercial license is available.
+
+Commercial licensing provides:
+- Use in closed-source applications without attribution requirements
+- Priority support and maintenance
+- Custom integration assistance
+
+For commercial licensing inquiries, please contact:
+
+  Remain BV
+  Email: sales@remainsoftware.com
+  Website: https://remainsoftware.com
+
+================================================================================
+WHICH LICENSE APPLIES?
+================================================================================
+
+- Using the VS Code extension as-is: MIT License applies (free)
+- Contributing to this project: MIT License applies
+- Embedding parser code in open source projects: MIT License applies (with attribution)
+- Embedding parser code in proprietary/closed-source products: Commercial License required

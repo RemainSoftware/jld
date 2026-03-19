@@ -1,25 +1,12 @@
 /*
- * MIT License
- *
+ * Job Log Detective
  * Copyright (c) 2026 Remain BV
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This software is dual-licensed:
+ * - MIT License for open source use
+ * - Commercial License for proprietary embedding
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * See LICENSE file for full terms.
  */
 
 // Internationalization (i18n) support for Job Log Detective runtime strings
@@ -117,11 +104,24 @@ export interface LocalizedStrings {
     'tree.timelineDesc': string;
     'tree.timeBucket': string;
     'tree.timeBucketHotspot': string;
+    'tree.bucketInterval.second': string;
+    'tree.bucketInterval.5sec': string;
+    'tree.bucketInterval.10sec': string;
+    'tree.bucketInterval.30sec': string;
+    'tree.bucketInterval.minute': string;
 
     // Document symbols
     'symbol.job': string;
     'symbol.summary': string;
     'symbol.messages': string;
+    'symbol.timeline': string;
+    'symbol.timelineDesc': string;
+    'symbol.timeBucket': string;
+    'symbol.bucketInterval.second': string;
+    'symbol.bucketInterval.5sec': string;
+    'symbol.bucketInterval.10sec': string;
+    'symbol.bucketInterval.30sec': string;
+    'symbol.bucketInterval.minute': string;
 
     // Editor decorations
     'decorations.enabled': string;
@@ -213,14 +213,27 @@ const defaultStrings: LocalizedStrings = {
 
     // Timeline
     'tree.timeline': 'Timeline ({0})',
-    'tree.timelineDesc': 'Messages in chronological order',
+    'tree.timelineDesc': '{0} intervals',
     'tree.timeBucket': '{0} ({1})',
     'tree.timeBucketHotspot': '{0} ({1}) \uD83D\uDD25',
+    'tree.bucketInterval.second': '1-second',
+    'tree.bucketInterval.5sec': '5-second',
+    'tree.bucketInterval.10sec': '10-second',
+    'tree.bucketInterval.30sec': '30-second',
+    'tree.bucketInterval.minute': '1-minute',
 
     // Document symbols
     'symbol.job': 'Job: {0}',
     'symbol.summary': 'Summary',
     'symbol.messages': '{0} messages',
+    'symbol.timeline': 'Timeline ({0})',
+    'symbol.timelineDesc': '{0} intervals',
+    'symbol.timeBucket': '{0} ({1})',
+    'symbol.bucketInterval.second': '1-second',
+    'symbol.bucketInterval.5sec': '5-second',
+    'symbol.bucketInterval.10sec': '10-second',
+    'symbol.bucketInterval.30sec': '30-second',
+    'symbol.bucketInterval.minute': '1-minute',
 
     // Editor decorations
     'decorations.enabled': 'Editor decorations enabled',

@@ -1,33 +1,21 @@
 /*
- * MIT License
- *
+ * Job Log Detective
  * Copyright (c) 2026 Remain BV
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This software is dual-licensed:
+ * - MIT License for open source use
+ * - Commercial License for proprietary embedding
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * See LICENSE file for full terms.
  */
 
 // DocumentSymbolProvider for Job Log Detective - provides Outline view integration
 
 import * as vscode from 'vscode';
-import { ParsedJobLog } from './types';
+import { ParsedJobLog, JobLogMessage } from './types';
 import { parseJobLog, groupMessages } from './joblogParser';
 import { t } from './i18n';
+import { getFlameDecoration, determineBucketSize, groupMessagesByTimeBucket, formatBucketTime, getBucketStats } from './timelineUtils';
 
 /**
  * Provides document symbols for job log files, enabling the Outline view
@@ -224,9 +212,92 @@ export class JobLogDocumentSymbolProvider implements vscode.DocumentSymbolProvid
             return 0; // Keep original order otherwise
         });
         
+        // Add timeline section before type symbols
+        const timelineSymbol = this.createTimelineSymbol(document, messages, highSeverityThreshold);
+        if (timelineSymbol) {
+            symbols.push(timelineSymbol);
+        }
+        
         symbols.push(...typeSymbols);
         
         return symbols;
+    }
+    
+    /**
+     * Create timeline symbol with time-bucketed children
+     */
+    private createTimelineSymbol(
+        document: vscode.TextDocument,
+        messages: JobLogMessage[],
+        highSeverityThreshold: number
+    ): vscode.DocumentSymbol | null {
+        if (messages.length === 0) {
+            return null;
+        }
+        
+        // Sort messages by timestamp to get first/last for range
+        const sortedMessages = [...messages].sort((a, b) => 
+            a.timestamp.getTime() - b.timestamp.getTime()
+        );
+        
+        const firstMsg = sortedMessages[0];
+        const lastMsg = sortedMessages[sortedMessages.length - 1];
+        
+        // Calculate duration and determine bucket size using shared utility
+        const durationMs = lastMsg.timestamp.getTime() - firstMsg.timestamp.getTime();
+        const { bucketSizeMs, bucketLabel } = determineBucketSize(durationMs, messages.length);
+        
+        // Group messages into time buckets using shared utility (pass pre-sorted to avoid redundant sort)
+        const timeBuckets = groupMessagesByTimeBucket(sortedMessages, bucketSizeMs, true);
+        
+        // Get localized interval text for description
+        const intervalText = t(`symbol.bucketInterval.${bucketLabel}` as keyof import('./i18n').LocalizedStrings);
+        
+        // Create timeline range
+        const timelineRange = new vscode.Range(
+            firstMsg.lineNumber - 1, 0,
+            lastMsg.endLineNumber - 1, 0
+        );
+        
+        const timelineSymbol = new vscode.DocumentSymbol(
+            t('symbol.timeline', messages.length),
+            t('symbol.timelineDesc', intervalText),
+            vscode.SymbolKind.Array,
+            timelineRange,
+            timelineRange
+        );
+        
+        // Convert buckets to child symbols (leaf nodes only - per-message breakdown 
+        // is already available under type/messageId groups, no need to duplicate)
+        for (const bucket of timeBuckets) {
+            const timeStr = formatBucketTime(bucket.bucketTime);
+            const stats = getBucketStats(bucket.messages, highSeverityThreshold);
+            
+            // Build label with flame decoration using shared utility
+            const flames = getFlameDecoration(stats.highSeverityCount, stats.count);
+            const label = flames 
+                ? `${t('symbol.timeBucket', timeStr, stats.count)} ${flames}`
+                : t('symbol.timeBucket', timeStr, stats.count);
+            
+            const firstBucketMsg = bucket.messages[0];
+            const lastBucketMsg = bucket.messages[bucket.messages.length - 1];
+            const bucketRange = new vscode.Range(
+                firstBucketMsg.lineNumber - 1, 0,
+                lastBucketMsg.endLineNumber - 1, 0
+            );
+            
+            const bucketSymbol = new vscode.DocumentSymbol(
+                label,
+                stats.maxSeverity > 0 ? `SEV ${stats.maxSeverity}` : '',
+                stats.highSeverityCount > 0 ? vscode.SymbolKind.Event : vscode.SymbolKind.Variable,
+                bucketRange,
+                bucketRange
+            );
+            
+            timelineSymbol.children.push(bucketSymbol);
+        }
+        
+        return timelineSymbol;
     }
     
     /**
