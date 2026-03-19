@@ -99,7 +99,7 @@ export function determineBucketSize(durationMs: number, messageCount?: number): 
     // Iterate largest to smallest, find first that provides enough buckets
     for (let i = BUCKET_SIZES.length - 1; i >= 0; i--) {
         const config = BUCKET_SIZES[i];
-        const possibleBuckets = Math.floor(durationMs / config.bucketSizeMs);
+        const possibleBuckets = Math.max(1, Math.floor(durationMs / config.bucketSizeMs) + 1);
         if (possibleBuckets >= targetBucketCount) {
             return config;
         }
