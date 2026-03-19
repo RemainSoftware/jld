@@ -186,8 +186,17 @@ export interface BucketStats {
  */
 export function getBucketStats(messages: JobLogMessage[], highSeverityThreshold: number): BucketStats {
     const count = messages.length;
-    const highSeverityCount = messages.filter(m => m.severity >= highSeverityThreshold).length;
-    const maxSeverity = messages.length > 0 ? Math.max(...messages.map(m => m.severity)) : 0;
+    let highSeverityCount = 0;
+    let maxSeverity = 0;
+
+    for (const m of messages) {
+        if (m.severity >= highSeverityThreshold) {
+            highSeverityCount++;
+        }
+        if (m.severity > maxSeverity) {
+            maxSeverity = m.severity;
+        }
+    }
     
     return { count, highSeverityCount, maxSeverity };
 }
