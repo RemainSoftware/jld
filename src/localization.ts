@@ -254,7 +254,7 @@ export const DUTCH: LanguageDefinition = {
     jobLogTitle: ['Taaklogboek', 'Taak logboek'],
     pageLabel: ['Pagina'],
 
-    jobNameLabel: ['Naam taak'],
+    jobNameLabel: ['Naam taak', 'Taaknaam'],
     userLabel: ['Gebruiker'],
     numberLabel: ['Nummer'],
     jobDescLabel: ['Taakbeschrijving'],
