@@ -34,11 +34,16 @@ const loadFixture = (filename: string): string => {
     return readFileSync(join(fixturesDir, filename), 'utf-8');
 };
 
+const loadTestFile = (filename: string): string => {
+    return readFileSync(join(__dirname, filename), 'utf-8');
+};
+
 // Job log fixtures loaded from files
 let ENGLISH_JOBLOG: string;
 let ENGLISH_JOBLOG_SMALL: string;
 let GERMAN_JOBLOG: string;
 let DUTCH_JOBLOG: string;
+let DUTCH_PDF_JOBLOG: string;
 let SPANISH_JOBLOG: string;
 let FRENCH_JOBLOG: string;
 let ITALIAN_JOBLOG: string;
@@ -56,6 +61,7 @@ beforeAll(() => {
     ENGLISH_JOBLOG_SMALL = loadFixture('joblog_small.txt');
     GERMAN_JOBLOG = loadFixture('joblog_german.txt');
     DUTCH_JOBLOG = loadFixture('joblog_dutch.txt');
+    DUTCH_PDF_JOBLOG = loadTestFile('joblog_dutch_pdf_issue_29.txt');
     SPANISH_JOBLOG = loadFixture('joblog_spanish.txt');
     FRENCH_JOBLOG = loadFixture('joblog_french.txt');
     ITALIAN_JOBLOG = loadFixture('joblog_italian.txt');
@@ -642,5 +648,70 @@ describe('Performance', () => {
 
         expect(result.isValid).toBe(true);
         expect(elapsed).toBeLessThan(2000);
+    });
+});
+
+describe('PDF-extracted job logs (Issue #29)', () => {
+    describe('Dutch PDF job log', () => {
+        it('should detect PDF-extracted job log', () => {
+            const result = detectJobLog(DUTCH_PDF_JOBLOG);
+            expect(result.isJobLog).toBe(true);
+            expect(result.confidence).toBe('high');
+        });
+
+        it('should parse header correctly', () => {
+            const result = parseJobLog(DUTCH_PDF_JOBLOG);
+            expect(result.isValid).toBe(true);
+            expect(result.header).toBeDefined();
+            expect(result.header?.productId).toBe('5770SS1');
+            expect(result.header?.version).toBe('V7R5M0');
+            expect(result.header?.jobName).toBe('OM632411');
+            expect(result.header?.user).toBe('HAFNERR');
+            expect(result.header?.jobNumber).toBe('846342');
+        });
+
+        it('should parse unindented continuation lines (PDF extraction issue)', () => {
+            const result = parseJobLog(DUTCH_PDF_JOBLOG);
+            
+            // First message should have full continuation text
+            const firstMsg = result.messages[0];
+            expect(firstMsg.messageText).toContain('15:45:26 in subsysteem OMS');
+            expect(firstMsg.messageText).toContain('Taak in systeem');
+        });
+
+        it('should parse multi-line cause text with unindented continuations', () => {
+            const result = parseJobLog(DUTCH_PDF_JOBLOG);
+            
+            // Find message with cause that spans many unindented lines
+            const msgWithCause = result.messages.find(m => m.cause && m.cause.includes('bibliotheek QGPLSLIG'));
+            expect(msgWithCause).toBeDefined();
+            expect(msgWithCause?.cause).toContain('SBMJOB');
+            expect(msgWithCause?.cause).toContain('INLLIBL');
+        });
+
+        it('should skip PDF page footer lines (e.g., "HAFNERR, 07-05-26")', () => {
+            const result = parseJobLog(DUTCH_PDF_JOBLOG);
+            
+            // Page footer should not be captured as part of message text
+            // Note: "HAFNERR, 07-05-26" can legitimately appear INSIDE message content
+            // (e.g., as PRTTXT parameter value), but should not be appended as continuation
+            for (const msg of result.messages) {
+                if (msg.messageText) {
+                    // Footer should not be at the end as a captured continuation
+                    expect(msg.messageText).not.toMatch(/HAFNERR,\s*07-05-26\s*$/);
+                }
+            }
+        });
+
+        it('should handle page breaks in PDF-extracted text', () => {
+            const result = parseJobLog(DUTCH_PDF_JOBLOG);
+            expect(result.messages.length).toBeGreaterThan(20);
+            
+            // Last message should have full text including cause
+            const lastMsg = result.messages[result.messages.length - 1];
+            expect(lastMsg.messageId).toBe('CPF1164');
+            expect(lastMsg.cause).toContain('eindcode');
+            expect(lastMsg.cause).toContain('processortijd');
+        });
     });
 });

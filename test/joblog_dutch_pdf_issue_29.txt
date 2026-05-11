@@ -1,0 +1,174 @@
+5770SS1 V7R5M0 220415 Taaklogboek SLIGRO20 07-05-26 15:45:33 CEST Pagina 1
+Taaknaam . . . . . . . . . . : OM632411 Gebruiker . . . . : HAFNERR Nummer . . . . . . . . . . . : 846342
+Taakbeschrijving . . . . . . : OMSNORMAL Bibliotheek . . . : QGPLSLIG
+BERICHT-ID TYPE SEV DATUM TIJD VAN PGM BIBLIOTH. INST NAAR PGM BIBLIOTH. INST
+CPF1124 Informatie 00 07-05-26 15:45:26,289807 QWTPIIPP QSYS 04DC *EXT *N
+Bericht . . . . : Taak 846342/HAFNERR/OM632411 gestart op 07-05-26 om
+15:45:26 in subsysteem OMS in QGPLSLIG. Taak in systeem op 07-05-26 om
+15:45:26.
+CPI1125 Informatie 00 07-05-26 15:45:26,290802 QWTPCRJA QSYS 0110 *EXT *N
+Bericht . . . . : Taak 846342/HAFNERR/OM632411 is aangeboden.
+Oorzaak . . . . : taak 846342/HAFNERR/OM632411 afkomstig van taak
+845552/HAFNERR/QPADEV000D is opgenomen in takenwachtrij OMSNORMAL in
+bibliotheek QGPLSLIG. Taak 846342/HAFNERR/OM632411 is gestart met de
+opdracht SBMJOB (Taak aanbieden) en heeft de volgende kenmerken: JOBPTY(5)
+OUTPTY(5) PRTTXT(HAFNERR, 07-05-26) RTGDTA(QCMDB) SYSLIBL(SYSSLIGRO QSYS
+QSYS2 QHLPSYS QUSRSYS) CURLIB(*CRTDFT) INLLIBL(T#JB845552
+SLGDEVDTA SLGONTDTA SLIGRO QTEMP QGPLSLIG QGPL SLGDEVPGM
+SLGONTPGM SLGRDOLIB SLGTSTLIB SLGACCLIB SLGRDALIB SLGBETALIB SLGPRELIB
+DECENTRAAL LEVERDATUM CENTRAAL SLGPROGLIB OMS DC@PGMLIB DC@DTALIB
+QGPLLANSA LIBHTTP YAJL) INLASPGRP(*NONE) LOG(4 00 *SECLVL)
+LOGCLPGM(*YES) LOGOUTPUT(*JOBEND) OUTQ(QUSRSYS/QEZJOBLOG) PRTDEV(QPRINT)
+INQMSGRPY(*RQD) HOLD(*NO) DATE(*SYSVAL) SWS(00000000) MSGQ(QUSRSYS/HAFNERR)
+CCSID(37) SRTSEQ(*N/*HEX) LANGID(NLD) CNTRYID(NL) JOBMSGQMX(64)
+JOBMSGQFL(*PRTWRAP) ALWMLTTHD(*NO) SPLFACN(*KEEP) ACGCDE(thinkwise).
+*NONE Aanvraag 07-05-26 15:45:26,291045 QWTSCSBJ *N QCMD QSYS 0195
+Bericht . . . . : -CALL PGM(OMO001C2) PARM(('2') ('OM632411') ('CENTR')
+('RDO') ('TST') ('0') (' ') (' ') ('OMSNORMAL') ('QGPLSLIG') ('*NORM'))
+*NONE Opdracht 07-05-26 15:45:26,304782 QCLRTNE QSYS 0058 OMX905C OMS *STMT
+Naar module . . . . . . . . : OMX905C
+Naar procedure . . . . . . : OMX905C
+Instructie . . . . . . . . : 9500
+Bericht . . . . : 9400 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,309179 QCLRTNE QSYS 0058 OMX005C OMS *STMT
+Naar module . . . . . . . . : OMX005C
+Naar procedure . . . . . . : OMX005C
+Instructie . . . . . . . . : 7800
+Bericht . . . . : 7700 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,320650 QCLRTNE QSYS 0058 OMX005C OMS *STMT
+Naar module . . . . . . . . : OMX005C
+Naar procedure . . . . . . : OMX005C
+Instructie . . . . . . . . : 7800
+Bericht . . . . : 7700 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,322740 QCLRTNE QSYS 0058 OMX005C OMS *STMT
+Naar module . . . . . . . . : OMX005C
+Naar procedure . . . . . . : OMX005C
+Instructie . . . . . . . . : 7800
+Bericht . . . . : 7700 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,339489 QCLRTNE QSYS 0058 OMQRTVSRCP OMS *STMT
+Naar module . . . . . . . . : OMQRTVSRCP
+Naar procedure . . . . . . : OMQRTVSRCP
+Instructie . . . . . . . . : 11500
+Bericht . . . . : 11400 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,339627 QCLRTNE QSYS 0058 OMX001C OMS *STMT
+Naar module . . . . . . . . : OMX001C
+Naar procedure . . . . . . : OMX001C
+Instructie . . . . . . . . : 37800
+HAFNERR, 07-05-26
+5770SS1 V7R5M0 220415 Taaklogboek SLIGRO20 07-05-26 15:45:33 CEST Pagina 2
+Taaknaam . . . . . . . . . . : OM632411 Gebruiker . . . . : HAFNERR Nummer . . . . . . . . . . . : 846342
+Taakbeschrijving . . . . . . : OMSNORMAL Bibliotheek . . . : QGPLSLIG
+BERICHT-ID TYPE SEV DATUM TIJD VAN PGM BIBLIOTH. INST NAAR PGM BIBLIOTH. INST
+Bericht . . . . : 31700 - RETURN
+*NONE Opdracht 07-05-26 15:45:26,339914 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340041 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340162 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340306 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340426 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340545 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340663 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340781 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,340899 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+HAFNERR, 07-05-26
+5770SS1 V7R5M0 220415 Taaklogboek SLIGRO20 07-05-26 15:45:33 CEST Pagina 3
+Taaknaam . . . . . . . . . . : OM632411 Gebruiker . . . . : HAFNERR Nummer . . . . . . . . . . . : 846342
+Taakbeschrijving . . . . . . : OMSNORMAL Bibliotheek . . . : QGPLSLIG
+BERICHT-ID TYPE SEV DATUM TIJD VAN PGM BIBLIOTH. INST NAAR PGM BIBLIOTH. INST
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,341024 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+*NONE Opdracht 07-05-26 15:45:26,341145 QCLRTNE QSYS 0058 OMX904C OMS *STMT
+Naar module . . . . . . . . : OMX904C
+Naar procedure . . . . . . : OMX904C
+Instructie . . . . . . . . : 6700
+Bericht . . . . : - RETURN /* RETURN due to end of CL program
+*/
+5770SS1 V7R5M0 220415 Taaklogboek SLIGRO20 07-05-26 15:45:33 CEST Pagina 4
+Taaknaam . . . . . . . . . . : OM632411 Gebruiker . . . . : HAFNERR Nummer . . . . . . . . . . . : 846342
+Taakbeschrijving . . . . . . : OMSNORMAL Bibliotheek . . . : QGPLSLIG
+BERICHT-ID TYPE SEV DATUM TIJD VAN PGM BIBLIOTH. INST NAAR PGM BIBLIOTH. INST
+CPC2191 Voltooiing 00 07-05-26 15:45:32,890455 QLIDLOBJ QSYS 0772 QLICLLIB QSYS 09DE
+Bericht . . . . : Object OMX919 in QTEMP type *USRSPC is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:32,892089 QLIDLOBJ QSYS 0772 QLICLLIB QSYS 09DE
+Bericht . . . . : Object OMX018 in QTEMP type *USRSPC is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:32,893357 QLIDLOBJ QSYS 0772 QLICLLIB QSYS 09DE
+Bericht . . . . : Object OMSUSR in QTEMP type *USRSPC is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:33,003046 QLIDLFIL QSYS 00A0 QLICLLIB QSYS 0999
+Bericht . . . . : Object BHC888CL_1 in QTEMP type *FILE is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:33,003054 QLIDLFIL QSYS 00A0 QLICLLIB QSYS 0999
+Bericht . . . . : Object BHC888CL_3 in QTEMP type *FILE is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:33,003060 QLIDLFIL QSYS 00A0 QLICLLIB QSYS 0999
+Bericht . . . . : Object DSPOBJDPF in QTEMP type *FILE is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:33,003065 QLIDLFIL QSYS 00A0 QLICLLIB QSYS 0999
+Bericht . . . . : Object OBJIWCPF in QTEMP type *FILE is gewist.
+CPC2191 Voltooiing 00 07-05-26 15:45:33,003580 QLIDLFIL QSYS 00A0 QLICLLIB QSYS 0999
+Bericht . . . . : Object RTVFACCL_1 in QTEMP type *FILE is gewist.
+CPF1164 Voltooiing 00 07-05-26 15:45:33,008852 QWTMCEOJ QSYS 0161 *EXT *N
+Bericht . . . . : Taak 846342/HAFNERR/OM632411 beëindigd op 07-05-26 om
+15:45:33; 0,763 sec. gebruikt; eindcode 20 .
+Oorzaak . . . . : taak 846342/HAFNERR/OM632411 is voltooid op 07-05-26 om
+15:45:33 na gebruik van 0,763 seconden processortijd. Het maximale
+tijdelijke geheugen dat is gebruikt was 43 MB. De eindcode voor de taak is
+20. De taak is beëindigd na 1 routestappen met de secundaire eindcode 0. De
+betekenis van de verschillende eindcodes is: 0 - De taak is normaal
+beëindigd. 10 - De taak is normaal beëindigd tijdens een bestuurd einde of
+een bestuurd einde van een subsysteem. 20 - De taak is beëindigd, omdat de
+severity voor beëindigen is overschreden (taakkenmerk ENDSEV). 30 - De taak
+is abnormaal beëindigd. 40 - De taak is beëindigd voordat hij actief werd.
+50 - De taak is beëindigd terwijl hij actief was. 60 - Het subsysteem is
+abnormaal beëindigd terwijl de taak actief was. 70 - Het systeem is
+abnormaal beëindigd terwijl de taak actief was. 80 - De taak is beëindigd
+met de opdracht ENDJOBABN (Taak abnormaal beëindigen). 90 - De taak is
+beëindigd met de opdracht ENDJOBABN na het verstrijken van de
+verwerkingstijd. Herstelprocedure: Voor meer informatie, raadpleegt u de
+onderwerpen over Werkbeheer in de categorie Systeembeheer in het IBM i
+Informatiecentrum, http://www.ibm.com/systems/i/infocenter/.
+HAFNERR, 07-05-26

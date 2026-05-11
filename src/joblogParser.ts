@@ -29,7 +29,6 @@ import {
     JobLogMessage,
     JobLogStats,
     ParsedJobLog,
-    ProgramInfo,
     JobLogDetectionResult,
     JobCompletionStatus
 } from './types';
@@ -264,7 +263,18 @@ function parseTimestamp(dateStr: string, timeStr: string): Date {
 }
 
 /**
+ * Check if a line looks like a PDF page footer (e.g., "HAFNERR, 07-05-26")
+ * These are print text footers that appear at the bottom of each page in PDF exports
+ */
+function isPdfPageFooter(line: string): boolean {
+    // Pattern: USERNAME, DD-MM-YY or similar date formats
+    // The username is typically all caps, followed by comma and date
+    return /^[A-Z0-9_]+,\s*\d{2}[./-]\d{2}[./-]\d{2}\s*$/.test(line.trim());
+}
+
+/**
  * Check if a line is a detail/continuation line (not a message or header)
+ * Enhanced to support PDF-extracted text where indentation may be lost
  */
 function isDetailLine(line: string): boolean {
     // Empty line
@@ -283,6 +293,9 @@ function isDetailLine(line: string): boolean {
     if (PATTERNS.jobInfo.test(line)) {return false;}
     if (PATTERNS.jobDesc.test(line)) {return false;}
     
+    // PDF page footer (e.g., "HAFNERR, 07-05-26")
+    if (isPdfPageFooter(line)) {return false;}
+    
     // Starts with whitespace or is indented (typical detail line)
     if (/^\s+/.test(line)) {return true;}
     
@@ -298,7 +311,9 @@ function isDetailLine(line: string): boolean {
     if (PATTERNS.thread.test(line)) {return true;}
     if (PATTERNS.fromUser.test(line)) {return true;}
     
-    return false;
+    // For PDF-extracted text: if not a structural line, treat as continuation
+    // This handles unindented continuation lines from PDF text extraction
+    return true;
 }
 
 /**
@@ -646,8 +661,8 @@ export function parseJobLog(content: string, highSeverityThreshold: number = 30)
     const messages: JobLogMessage[] = [];
     
     // Detect language (for logging purposes, patterns already support all)
-    const detectedLang = detectLanguage(content);
-    console.log(`Job Log Detective: Detected language: ${detectedLang.name}`);
+    // const detectedLang = detectLanguage(content);
+    // console.log(`Job Log Detective: Detected language: ${detectedLang.name}`);
     
     // Parse header
     const header = parseHeader(lines);
