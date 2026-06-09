@@ -2,7 +2,7 @@
   "name": "joblog-detective",
   "displayName": "%displayName%",
   "description": "%description%",
-  "version": "1.4.0",
+  "version": "1.6.0",
   "license": "MIT",
   "publisher": "remainsoftware",
   "icon": "images/icon.png",

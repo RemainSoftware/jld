@@ -68,6 +68,18 @@ jobs:
       - name: Install vsce
         run: npm install -g @vscode/vsce
 
+      - name: Compute pre-release version
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const [major, minor, patch] = pkg.version.split('.').map(Number);
+            // Release uses even minor (e.g. 1.6.0), pre-release uses odd minor below it (e.g. 1.5.x)
+            pkg.version = major + '.' + (minor - 1) + '.' + ${{ github.run_number }};
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Pre-release version: ' + pkg.version);
+          "
+
       - name: Publish prerelease to VS Code Marketplace
         run: vsce publish --pre-release -p ${{ secrets.VSCE_PAT }}
         env:
