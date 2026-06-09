@@ -47,8 +47,9 @@ function buildPatterns() {
         // Header line: flexible for various date/page formats and languages
         // "5770SS1 V7R6M0 250418 ... Job Log|Jobprotokoll|Taaklogboek ... PLATO 28-02-26|01.03.26|20/05/22 22:55:04 CET Page|Seite|Pagina|Página 1"
         // Note: timezone is optional (not present in some Dutch logs)
+        // Timezone can be simple (CET) or offset-based (UTC+01:00S)
         pageHeader: new RegExp(
-            `^\\s*(5770\\w+)\\s+(V\\d+R\\d+M\\d+)\\s+(\\d+)\\s+.*?(\\w+)\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})(?:\\s+(\\w+))?\\s+(?:${pageLabels})\\s+(\\d+)`,
+            `^\\s*(5770\\w+)\\s+(V\\d+R\\d+M\\d+)\\s+(\\d+)\\s+.*?(\\w+)\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})(?:\\s+(\\w+(?:[+-]\\d{2}:\\d{2}\\w*)?))?\\s+(?:${pageLabels})\\s+(\\d+)`,
             'i'
         ),
         
