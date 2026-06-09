@@ -49,6 +49,7 @@ let FRENCH_JOBLOG: string;
 let ITALIAN_JOBLOG: string;
 let FAILED_JOBLOG: string;
 let PAGE_SPLIT_JOBLOG: string;
+let UTC_OFFSET_JOBLOG: string;
 
 const NON_JOBLOG_CONTENT = `
 This is just a regular text file.
@@ -67,6 +68,7 @@ beforeAll(() => {
     ITALIAN_JOBLOG = loadFixture('joblog_italian.txt');
     FAILED_JOBLOG = loadFixture('joblog_failed.txt');
     PAGE_SPLIT_JOBLOG = loadFixture('joblog_page_split.txt');
+    UTC_OFFSET_JOBLOG = loadTestFile('issue_parsing_en.txt');
 });
 
 describe('detectJobLog', () => {
@@ -713,5 +715,32 @@ describe('PDF-extracted job logs (Issue #29)', () => {
             expect(lastMsg.cause).toContain('eindcode');
             expect(lastMsg.cause).toContain('processortijd');
         });
+    });
+});
+
+describe('UTC offset timezone (Issue: issue_parsing_en)', () => {
+    it('should detect job log with UTC+01:00S timezone', () => {
+        const result = detectJobLog(UTC_OFFSET_JOBLOG);
+        expect(result.isJobLog).toBe(true);
+        expect(result.confidence).toBe('high');
+    });
+
+    it('should parse header with UTC offset timezone', () => {
+        const result = parseJobLog(UTC_OFFSET_JOBLOG);
+        expect(result.isValid).toBe(true);
+        expect(result.header).toBeDefined();
+        expect(result.header?.productId).toBe('5770SS1');
+        expect(result.header?.version).toBe('V7R4M0');
+        expect(result.header?.systemName).toBe('PPPPP001');
+        expect(result.header?.timezone).toBe('UTC+01:00S');
+        expect(result.header?.jobName).toBe('OM212678');
+        expect(result.header?.user).toBe('USERX');
+        expect(result.header?.jobNumber).toBe('712705');
+    });
+
+    it('should parse messages correctly', () => {
+        const result = parseJobLog(UTC_OFFSET_JOBLOG);
+        expect(result.messages.length).toBeGreaterThan(0);
+        expect(result.messages[0].messageId).toBe('CPF1124');
     });
 });
