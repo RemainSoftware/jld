@@ -1,0 +1,22 @@
+ 5770SS1 V7R4M0 190621                           Job Log                                    S YSTEM    26-09-23          Page    1
+  Job name . . . . . . . . . . :     11.16.25      User  . . . . . . :    PDTNABD01   Number . . . . . . . . . . . :   0C  CD
+  Job description  . . . . . . :   SER     26      Library . . . . . :   3507QSUER                                     D
+MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST
+CPF1124    Information             00   26-09-23  11.16.25,025692  QWTPIIPP     QSYS        04CC     *EXT                    *N
+                                     Message . . . . :   Job 263507/QUSER/PGMNAM started on 26-09-23 at
+                                       11.16.25 in subsystem QBATCH in QSYS. Job entered system on 26-09-23 at
+                                       11.16.24.
+CPI1125    Information             00   26-09-23  11.16.25,025852  QWTPCRJA     QSYS        0110     *EXT                    *N
+                                     Message . . . . :   Job 263507/QUSER/PGMNAM submitted.
+                                     Cause . . . . . :   Job 263507/QUSER/PGMNAM submitted to job queue QBATCH
+                                       in QGPL from job 263506/QUSER/PGMNAM. Job 263507/QUSER/PGMNAM was
+                                       started using the Submit Job (SBMJOB) command with the following job
+                                       attributes: JOBPTY(5) OUTPTY(5) PRTTXT() RTGDTA(QCMDB).
+*NONE      Request                      26-09-23  11.16.25,026044  QWTSCSBJ                 *N       QCMD        QSYS        0195
+                                     Message . . . . :  -CALL PGM(PGMNAM)
+CPF1164    Completion              00   26-09-23  11.16.25,297727  QWTMCEOJ     QSYS        0161     *EXT                    *N
+                                     Message . . . . :   Job 263507/QUSER/PGMNAM ended on 26-09-23 at 11.16.25;
+                                       .045 seconds used; end code 0 .
+                                     Cause . . . . . :   Job 263507/QUSER/PGMNAM completed on 26-09-23 at
+                                       11.16.25 after it used .045 seconds processing unit time. The maximum
+                                       temporary storage used was 23 megabytes. The job had ending code 0.
