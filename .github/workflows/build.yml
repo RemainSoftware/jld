@@ -1,4 +1,3 @@
-
 # MIT License
 # Copyright (c) 2026 Remain BV
 
@@ -80,24 +79,32 @@ jobs:
           const fs = require('fs');
           const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
           const [major, minor] = pkg.version.split('.').map(Number);
+
           if (minor < 1) {
             throw new Error('Minor version must be >= 1');
           }
+
           pkg.version = `${major}.${minor - 1}.${process.env.RUN_NUMBER}`;
-          fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          fs.writeFileSync(
+            'package.json',
+            JSON.stringify(pkg, null, 2) + '\n'
+          );
           console.log('Pre-release version: ' + pkg.version);
           NODE
+
+      - name: Compile TypeScript
+        run: npm run compile
 
       - name: Package prerelease
         run: vsce package --pre-release --out joblog-detective.vsix
 
       - name: Publish prerelease to VS Code Marketplace
-        run: vsce publish --packagePath joblog-detective.vsix --pre-release
+        run: vsce publish --packagePath joblog-detective.vsix --pre-release --skip-duplicate
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
       - name: Publish prerelease to Open VSX
-        run: ovsx publish joblog-detective.vsix --pre-release
+        run: ovsx publish joblog-detective.vsix --pre-release --skip-duplicate
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
 
@@ -129,11 +136,11 @@ jobs:
         run: vsce package --out joblog-detective.vsix
 
       - name: Publish to VS Code Marketplace
-        run: vsce publish --packagePath joblog-detective.vsix
+        run: vsce publish --packagePath joblog-detective.vsix --skip-duplicate
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
       - name: Publish to Open VSX
-        run: ovsx publish joblog-detective.vsix
+        run: ovsx publish joblog-detective.vsix --skip-duplicate
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
