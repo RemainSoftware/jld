@@ -9,7 +9,10 @@ on:
   pull_request:
     branches: [main]
   release:
-    types: [created]
+    types: [published]
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -22,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -34,7 +37,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Install vsce
+      - name: Install packaging tool
         run: npm install -g @vscode/vsce
 
       - name: Package extension
@@ -59,36 +62,56 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
+      - name: Install publishing tools
+        run: npm install -g @vscode/vsce ovsx
 
       - name: Compute pre-release version
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
-          node -e "
-            const fs = require('fs');
-            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            const [major, minor, patch] = pkg.version.split('.').map(Number);
-            // Release uses even minor (e.g. 1.6.0), pre-release uses odd minor below it (e.g. 1.5.x)
-            pkg.version = major + '.' + (minor - 1) + '.' + ${{ github.run_number }};
-            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-            console.log('Pre-release version: ' + pkg.version);
-          "
+          node - <<'NODE'
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const [major, minor] = pkg.version.split('.').map(Number);
+
+          if (minor < 1) {
+            throw new Error('Minor version must be >= 1');
+          }
+
+          pkg.version = `${major}.${minor - 1}.${process.env.RUN_NUMBER}`;
+          fs.writeFileSync(
+            'package.json',
+            JSON.stringify(pkg, null, 2) + '\n'
+          );
+          console.log('Pre-release version: ' + pkg.version);
+          NODE
+
+      - name: Compile TypeScript
+        run: npm run compile
+
+      - name: Package prerelease
+        run: vsce package --pre-release --out joblog-detective.vsix
 
       - name: Publish prerelease to VS Code Marketplace
-        run: vsce publish --pre-release -p ${{ secrets.VSCE_PAT }}
+        run: vsce publish --packagePath joblog-detective.vsix --pre-release --skip-duplicate
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish prerelease to Open VSX
+        run: ovsx publish joblog-detective.vsix --pre-release --skip-duplicate
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
 
   publish:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' && !github.event.release.prerelease
 
     steps:
       - name: Checkout repository
@@ -97,16 +120,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
+      - name: Install publishing tools
+        run: npm install -g @vscode/vsce ovsx
+
+      - name: Compile TypeScript
+        run: npm run compile
+
+      - name: Package stable release
+        run: vsce package --out joblog-detective.vsix
 
       - name: Publish to VS Code Marketplace
-        run: vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: vsce publish --packagePath joblog-detective.vsix --skip-duplicate
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish to Open VSX
+        run: ovsx publish joblog-detective.vsix --skip-duplicate
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
