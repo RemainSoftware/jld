@@ -34,8 +34,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
+      - name: Install publishing tools
+        run: npm install -g @vscode/vsce ovsx
 
       - name: Package extension
         run: vsce package --out joblog-detective.vsix
@@ -47,7 +47,7 @@ jobs:
           path: joblog-detective.vsix
           retention-days: 5
 
-  publish-prerelease:
+publish-prerelease:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -65,8 +65,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
+      - name: Install publishing tools
+        run: npm install -g @vscode/vsce ovsx
 
       - name: Compute pre-release version
         run: |
@@ -74,16 +74,21 @@ jobs:
             const fs = require('fs');
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
             const [major, minor, patch] = pkg.version.split('.').map(Number);
-            // Release uses even minor (e.g. 1.6.0), pre-release uses odd minor below it (e.g. 1.5.x)
+            // 1.8.0 becomes 1.7.<run_number>
             pkg.version = major + '.' + (minor - 1) + '.' + ${{ github.run_number }};
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
             console.log('Pre-release version: ' + pkg.version);
           "
 
       - name: Publish prerelease to VS Code Marketplace
-        run: vsce publish --pre-release -p ${{ secrets.VSCE_PAT }}
+        run: vsce publish --pre-release -p "$VSCE_PAT"
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish prerelease to Open VSX
+        run: ovsx publish --pre-release
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
 
   publish:
     needs: build
@@ -103,10 +108,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install vsce
-        run: npm install -g @vscode/vsce
+      - name: Install publishing tools
+        run: npm install -g @vscode/vsce ovsx
 
       - name: Publish to VS Code Marketplace
-        run: vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: vsce publish -p "$VSCE_PAT"
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish to Open VSX
+        run: ovsx publish
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
