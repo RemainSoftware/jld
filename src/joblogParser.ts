@@ -48,10 +48,14 @@ function buildPatterns() {
         // "5770SS1 V7R6M0 250418 ... Job Log|Jobprotokoll|Taaklogboek ... PLATO 28-02-26|01.03.26|20/05/22 22:55:04 CET Page|Seite|Pagina|Página 1"
         // Note: timezone is optional (not present in some Dutch logs)
         // Timezone can be simple (CET) or offset-based (UTC+01:00S)
+        // Time is optional (missing in some spooled logs) and may use '.' separators (HH.MM.SS)
         pageHeader: new RegExp(
-            `^\\s*(5770\\w+)\\s+(V\\d+R\\d+M\\d+)\\s+(\\d+)\\s+.*?(\\w+)\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})(?:\\s+(\\w+(?:[+-]\\d{2}:\\d{2}\\w*)?))?\\s+(?:${pageLabels})\\s+(\\d+)`,
+            `^\\s*(5770\\w+)\\s+(V\\d+R\\d+M\\d+)\\s+(\\d+)\\s+.*?(\\w+)\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})(?:\\s+(\\d{2}[:.]\\d{2}[:.]\\d{2})(?:\\s+(\\w+(?:[+-]\\d{2}:\\d{2}\\w*)?))?)?\\s+(?:${pageLabels})\\s+(\\d+)`,
             'i'
         ),
+
+        // Lenient product/version prefix, used when the page header line is misaligned
+        productLine: /^\s*(5770\w+)\s+(V\d+R\d+M\d+)\s+(\d+)/i,
         
         // Job name line - built from language support
         jobInfo: langSupport.getJobInfoPattern(),
@@ -64,10 +68,10 @@ function buildPatterns() {
         
         // Message line pattern - captures message ID, type, severity, date, time, from/to program info
         // Handles date formats: DD-MM-YY, DD.MM.YY, and DD/MM/YY (Spanish)
-        // Handles time formats: HH:MM:SS.microseconds and HH:MM:SS,microseconds
+        // Handles time formats: HH:MM:SS.microseconds, HH:MM:SS,microseconds and HH.MM.SS,microseconds
         // More flexible spacing for PDF paste
         messageLine: new RegExp(
-            `^(\\*NONE|\\w{3,7})\\s+(${messageTypes})\\s*(\\d{0,2})?\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2}[.,]\\d+)\\s+(\\S+)\\s*(\\S+)?\\s*(\\S+)?\\s+(\\S+)\\s*(\\S+)?\\s*(\\S+)?`,
+            `^(\\*NONE|\\w{3,7})\\s+(${messageTypes})\\s*(\\d{0,2})?\\s+(\\d{2}[./-]\\d{2}[./-]\\d{2})\\s+(\\d{2}[:.]\\d{2}[:.]\\d{2}[.,]\\d+)\\s+(\\S+)\\s*(\\S+)?\\s*(\\S+)?\\s+(\\S+)\\s*(\\S+)?\\s*(\\S+)?`,
             'i'
         ),
         
@@ -184,9 +188,17 @@ function parseHeader(lines: string[]): JobLogHeader | undefined {
             header.buildDate = pageMatch[3];
             header.systemName = pageMatch[4];
             header.logDate = pageMatch[5];
-            header.logTime = pageMatch[6];
+            header.logTime = pageMatch[6] ? normalizeTime(pageMatch[6]) : undefined;
             header.timezone = pageMatch[7];
             header.pageNumber = parseInt(pageMatch[8], 10);
+        } else if (!header.productId) {
+            // Misaligned page header: still pick up product, version and build date
+            const productMatch = line.match(PATTERNS.productLine);
+            if (productMatch) {
+                header.productId = productMatch[1];
+                header.version = productMatch[2];
+                header.buildDate = productMatch[3];
+            }
         }
         
         // Parse job info
@@ -234,17 +246,61 @@ function parseHeader(lines: string[]): JobLogHeader | undefined {
 }
 
 /**
+ * Normalize a time with '.' separators (HH.MM.SS,micro) to HH:MM:SS,micro
+ */
+function normalizeTime(timeStr: string): string {
+    return timeStr.replace(/^(\d{2})[:.](\d{2})[:.](\d{2})/, '$1:$2:$3');
+}
+
+const QUALIFIED_JOB_PATTERN = /\b(\d{6})\/([A-Z#$@][\w#$@.]{0,9})\/([A-Z#$@][\w#$@.]{0,9})\b/i;
+const OBJECT_NAME_PATTERN = /^[A-Z#$@][\w#$@.]{0,9}$/i;
+
+/**
+ * Repair header fields that are missing or misaligned in the page header,
+ * using the first message timestamp and the qualified job name (nnnnnn/user/job)
+ * found in the job start/end messages.
+ */
+function repairHeader(header: JobLogHeader, messages: JobLogMessage[]): void {
+    if (messages.length === 0) {return;}
+
+    if (!header.logDate || !header.logTime) {
+        header.logDate = header.logDate || messages[0].date;
+        header.logTime = header.logTime || messages[0].time.split(/[.,]/)[0];
+    }
+
+    const jobInfoValid = !!header.jobName && OBJECT_NAME_PATTERN.test(header.jobName) &&
+        !!header.user && OBJECT_NAME_PATTERN.test(header.user) &&
+        !!header.jobNumber && /^\d{6}$/.test(header.jobNumber);
+    if (jobInfoValid) {return;}
+
+    // Prefer the job start (CPF1124) / end (CPF1164) messages, then any early message
+    const candidates = [
+        ...messages.filter(m => m.messageId === 'CPF1124' || m.messageId === 'CPF1164'),
+        ...messages.slice(0, 10)
+    ];
+    for (const msg of candidates) {
+        const match = `${msg.messageText || ''} ${msg.cause || ''}`.match(QUALIFIED_JOB_PATTERN);
+        if (match) {
+            header.jobNumber = match[1];
+            header.user = match[2];
+            header.jobName = match[3];
+            return;
+        }
+    }
+}
+
+/**
  * Parse a date/time string from the job log into a Date object
  * Handles date formats: DD-MM-YY, DD.MM.YY, and DD/MM/YY (Spanish)
- * Handles both HH:MM:SS.microseconds and HH:MM:SS,microseconds formats
+ * Handles HH:MM:SS.microseconds, HH:MM:SS,microseconds and HH.MM.SS,microseconds formats
  */
 function parseTimestamp(dateStr: string, timeStr: string): Date {
     // Date format: DD-MM-YY, DD.MM.YY, or DD/MM/YY
     const dateParts = dateStr.split(/[-./]/).map(Number);
     const [day, month, year] = dateParts;
-    
+
     // Time format: HH:MM:SS.microseconds or HH:MM:SS,microseconds
-    const timeParts = timeStr.split(':');
+    const timeParts = normalizeTime(timeStr).split(':');
     const hours = parseInt(timeParts[0], 10);
     const minutes = parseInt(timeParts[1], 10);
     // Handle both . and , as decimal separator
@@ -285,7 +341,7 @@ function isDetailLine(line: string): boolean {
     if (PATTERNS.messageLine.test(line)) {return false;}
     
     // Page header
-    if (PATTERNS.pageHeader.test(line)) {return false;}
+    if (PATTERNS.pageHeader.test(line) || PATTERNS.productLine.test(line)) {return false;}
     
     // Column header
     if (PATTERNS.columnHeader.test(line)) {return false;}
@@ -332,10 +388,7 @@ function extractContinuationText(lines: string[], startIndex: number, pattern: R
         const line = lines[i];
         
         // Skip page header lines - continuation may span pages
-        if (PATTERNS.pageHeader.test(line) || 
-            PATTERNS.columnHeader.test(line) ||
-            PATTERNS.jobInfo.test(line) ||
-            PATTERNS.jobDesc.test(line)) {
+        if (isPageHeaderLine(line)) {
             linesConsumed++;
             continue;
         }
@@ -395,6 +448,7 @@ function extractContinuationText(lines: string[], startIndex: number, pattern: R
  */
 function isPageHeaderLine(line: string): boolean {
     return PATTERNS.pageHeader.test(line) || 
+           PATTERNS.productLine.test(line) ||
            PATTERNS.columnHeader.test(line) ||
            PATTERNS.jobInfo.test(line) ||
            PATTERNS.jobDesc.test(line);
@@ -427,7 +481,8 @@ function parseMessageBlock(lines: string[], startIndex: number): { message: JobL
         return { message: null, linesConsumed: 1 };
     }
     
-    const [, messageId, typeLocal, severityStr, date, time, fromPgm, fromLib, fromInst, toPgm, toLib, toInst] = match;
+    const [, messageId, typeLocal, severityStr, date, rawTime, fromPgm, fromLib, fromInst, toPgm, toLib, toInst] = match;
+    const time = normalizeTime(rawTime);
     
     // Normalize the message type to English
     const normalizedType = langSupport.normalizeMessageType(typeLocal);
@@ -683,11 +738,7 @@ export function parseJobLog(content: string, highSeverityThreshold: number = 30)
         const line = lines[i];
         
         // Skip header lines, column headers, and empty lines
-        if (PATTERNS.pageHeader.test(line) || 
-            PATTERNS.columnHeader.test(line) ||
-            PATTERNS.jobInfo.test(line) ||
-            PATTERNS.jobDesc.test(line) ||
-            !line.trim()) {
+        if (isPageHeaderLine(line) || !line.trim()) {
             i++;
             continue;
         }
@@ -704,6 +755,8 @@ export function parseJobLog(content: string, highSeverityThreshold: number = 30)
         }
     }
     
+    repairHeader(header, messages);
+
     // Detect job completion status from the last messages
     const completion = detectJobCompletion(messages);
     

@@ -744,3 +744,89 @@ describe('UTC offset timezone (Issue: issue_parsing_en)', () => {
         expect(result.messages[0].messageId).toBe('CPF1124');
     });
 });
+
+describe('Misaligned page header without time', () => {
+    let CORRUPT_HEADER_JOBLOG: string;
+
+    beforeAll(() => {
+        CORRUPT_HEADER_JOBLOG = loadFixture('joblog_corrupt_header.txt');
+    });
+
+    it('should parse a job log whose page header has no time', () => {
+        const result = parseJobLog(CORRUPT_HEADER_JOBLOG);
+        expect(result.isValid).toBe(true);
+        expect(result.header?.productId).toBe('5770SS1');
+        expect(result.header?.version).toBe('V7R4M0');
+        expect(result.header?.logDate).toBe('10/07/26');
+    });
+
+    it('should take the header time from the first message', () => {
+        const result = parseJobLog(CORRUPT_HEADER_JOBLOG);
+        expect(result.header?.logTime).toBe('06:00:02');
+    });
+
+    it('should recover job name, user and number from the qualified job name', () => {
+        const result = parseJobLog(CORRUPT_HEADER_JOBLOG);
+        expect(result.header?.jobName).toBe('PGMNAM');
+        expect(result.header?.user).toBe('QUSER');
+        expect(result.header?.jobNumber).toBe('263507');
+    });
+
+    it('should parse all messages', () => {
+        const result = parseJobLog(CORRUPT_HEADER_JOBLOG);
+        expect(result.messages.map(m => m.messageId)).toEqual(
+            ['CPF1124', 'CPI1125', '*NONE', 'CPF1164']
+        );
+        expect(result.messages[2].messageText).toContain('CALL PGM(PGMNAM)');
+        expect(result.completion?.endCode).toBe(0);
+    });
+});
+
+describe('Times with dot separators (HH.MM.SS,micro)', () => {
+    const toDottedTimes = (content: string) => content
+        .replace(/(\d{2}-\d{2}-\d{2}\s+)(\d{2}):(\d{2}):(\d{2})\.(\d+)/g, '$1$2.$3.$4,$5')
+        .replace(/(\d{2}-\d{2}-\d{2}\s+)(\d{2}):(\d{2}):(\d{2})(\s+CET)/g, '$1$2.$3.$4$5');
+
+    it('should parse the same messages as the colon-separated log', () => {
+        const original = parseJobLog(ENGLISH_JOBLOG_SMALL);
+        const dotted = parseJobLog(toDottedTimes(ENGLISH_JOBLOG_SMALL));
+        expect(dotted.isValid).toBe(true);
+        expect(dotted.header?.logTime).toBe(original.header?.logTime);
+        expect(dotted.messages.length).toBe(original.messages.length);
+        expect(dotted.messages[0].timestamp.getTime()).toBe(original.messages[0].timestamp.getTime());
+    });
+
+    it('should parse a job log with DD-MM-YY HH.MM.SS,micro timestamps', () => {
+        const result = parseJobLog(loadFixture('joblog_dotted_time.txt'));
+        expect(result.isValid).toBe(true);
+        expect(result.header?.logDate).toBe('26-09-23');
+        expect(result.header?.logTime).toBe('11:16:25');
+        expect(result.header?.jobName).toBe('PGMNAM');
+        expect(result.header?.user).toBe('QUSER');
+        expect(result.header?.jobNumber).toBe('263507');
+        expect(result.messages.map(m => m.messageId)).toEqual(
+            ['CPF1124', 'CPI1125', '*NONE', 'CPF1164']
+        );
+        expect(result.completion?.endCode).toBe(0);
+    });
+
+    it('should normalize message time to colon separators', () => {
+        const result = parseJobLog(loadFixture('joblog_dotted_time.txt'));
+        const first = result.messages[0];
+        expect(first.date).toBe('26-09-23');
+        expect(first.time).toBe('11:16:25,025692');
+        expect(first.timestamp.getHours()).toBe(11);
+        expect(first.timestamp.getMinutes()).toBe(16);
+        expect(first.timestamp.getSeconds()).toBe(25);
+        expect(first.timestamp.getMilliseconds()).toBe(26);
+    });
+
+    it('should parse the same as the colon-separated version of the log', () => {
+        const dotted = parseJobLog(loadFixture('joblog_dotted_time.txt'));
+        const colon = parseJobLog(loadFixture('joblog_dotted_time.txt')
+            .replace(/(\d{2})\.(\d{2})\.(\d{2}),(\d+)/g, '$1:$2:$3,$4'));
+        expect(dotted.messages.map(m => m.time)).toEqual(colon.messages.map(m => m.time));
+        expect(dotted.messages.map(m => m.timestamp.getTime()))
+            .toEqual(colon.messages.map(m => m.timestamp.getTime()));
+    });
+});
